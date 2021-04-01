@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.restaurant.Networking.MenuClient
 import com.example.restaurant.Networking.MenuService
@@ -39,8 +40,17 @@ class DetailsActivity: AppCompatActivity() {
             startActivity(intent)
             Log.d("toooo FRAAAGGGG","what the hell")
         }
+
+        binding.detailsButtonBackCategories.setOnClickListener {
+            var intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.detailsBackButton.setOnClickListener{
+            onBackPressed()
         }
     }
+}
     fun setContent(binding: ActivityDetailsBinding,name:String,description:String,imageUrl:String,price:String,position:String,testing:MenuServer.Item){
 
 

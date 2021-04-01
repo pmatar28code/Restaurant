@@ -45,6 +45,8 @@ class MenuFragment: Fragment(R.layout.fragment_menu) {
 
                                 Toast.makeText(context,"this is the Menu that was clicked $test" , Toast.LENGTH_SHORT).show()
 
+                            },addToOnClick = {MenuModel ->
+                                RestaurantRepository.orderList.add(MenuModel)
                             })
                             //CategoriesAdapter(onClick = { CategoriesModel -> }).submitList(RestaurantRepository.categoriesList)
                             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)

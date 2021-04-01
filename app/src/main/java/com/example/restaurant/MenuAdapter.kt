@@ -3,6 +3,7 @@ package com.example.restaurant
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,8 @@ import kotlin.coroutines.coroutineContext
 
 class MenuAdapter(
         private val items:List<MenuServer.Item>,
-        private val onClick:(MenuServer.Item,pos:Int)-> Unit
+        private val onClick:(MenuServer.Item,pos:Int)-> Unit,
+        private val addToOnClick:(MenuServer.Item)->Unit
 ): RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -42,6 +44,9 @@ class MenuAdapter(
         holder.itemView.setOnClickListener {
             onClick(item,position)
         }
+        holder.itemView.findViewById<Button>(R.id.menu_add_to_cart_button).setOnClickListener {
+            addToOnClick(item)
+        }
 
     }
 
@@ -51,6 +56,7 @@ class MenuAdapter(
         fun onBind(current:MenuServer.Item){
             binding.apply {
                 menuText.text = current.name
+                menuPriceText.text = "Price:$${current.price}"
 
             }
 

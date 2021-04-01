@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemCategoriesBinding
 import com.example.restaurant.models.CategoriesModel
+import com.squareup.picasso.Picasso
 
 class CatAdapter(
         private val items:List<String>,
@@ -29,8 +30,38 @@ class CatAdapter(
         holder.itemView.setOnClickListener {
             var new = CategoriesModel(item)
             onClick(item)
-        }
 
+        }
+        var appetizersImage = "http://192.168.1.191:8090/images/appetizers.png"
+        var saladsImage = "http://192.168.1.191:8090/images/salads.png"
+        var soupsImage = "http://192.168.1.191:8090/images/soups.png"
+        var entreesImage = "http://192.168.1.191:8090/images/entrees.png"
+        var dessertsImage = "http://192.168.1.191:8090/images/desserts.png"
+        var sandwichesImage = "http://192.168.1.191:8090/images/sandwiches.png"
+
+        when (item) {
+            "appetizers" -> {
+                Picasso.get().load(appetizersImage).into(holder.itemView
+                        .findViewById<ImageView>(R.id.category_image))
+            }
+            "salads" -> {
+                Picasso.get().load(saladsImage).into(holder.itemView
+                        .findViewById<ImageView>(R.id.category_image))
+            }
+            "soups" -> {
+                Picasso.get().load(soupsImage).into(holder.itemView
+                        .findViewById<ImageView>(R.id.category_image))
+            }
+            "entrees" ->{ Picasso.get().load(entreesImage).into(holder.itemView
+                    .findViewById<ImageView>(R.id.category_image))
+            }
+            "desserts" -> { Picasso.get().load(dessertsImage).into(holder.itemView
+                    .findViewById<ImageView>(R.id.category_image))
+            }
+            "sandwiches" -> { Picasso.get().load(sandwichesImage).into(holder.itemView
+                    .findViewById<ImageView>(R.id.category_image))
+            }
+        }
     }
 
     class CurrentViewHolder(
