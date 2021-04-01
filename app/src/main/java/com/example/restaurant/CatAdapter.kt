@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemCategoriesBinding
+import com.example.restaurant.models.CategoriesModel
 
 class CatAdapter(
-        private val items:List<String>
+        private val items:List<String>,
+        private val onClick:(String)-> Unit
 ): RecyclerView.Adapter<CatAdapter.CurrentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -24,6 +26,10 @@ class CatAdapter(
             holder: CurrentViewHolder,position: Int) {
         val item = items[position]
         holder.onBind(items[position])
+        holder.itemView.setOnClickListener {
+            var new = CategoriesModel(item)
+            onClick(item)
+        }
 
     }
 

@@ -2,15 +2,17 @@ package com.example.restaurant
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemCategoriesBinding
+import com.example.restaurant.models.CategoriesModel
 
 
-class CategoriesAdapter : ListAdapter<String, CategoriesAdapter.StoreItemViewHolder>(diff) {
+class CategoriesAdapter(
+        private var onClick: (CategoriesModel) -> Unit
+) : ListAdapter<String, CategoriesAdapter.RestaurantViewHolder>(diff) {
+
 
     companion object {
         private val diff = object : DiffUtil.ItemCallback<String>() {
@@ -24,14 +26,19 @@ class CategoriesAdapter : ListAdapter<String, CategoriesAdapter.StoreItemViewHol
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemCategoriesBinding.inflate(inflater, parent, false)
-        return StoreItemViewHolder(binding)
+        return RestaurantViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: StoreItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         holder.onBind(getItem(position))
+        var item = getItem(position)
+        holder.itemView.setOnClickListener {
+        var Cname = CategoriesModel(item)
+            onClick (Cname)
+        }
 
         //var item = getItem(position)
         //var icon = item.artworkUrl100
@@ -39,7 +46,7 @@ class CategoriesAdapter : ListAdapter<String, CategoriesAdapter.StoreItemViewHol
         //    .findViewById<ImageView>(R.id.image))
     }
 
-    class StoreItemViewHolder(
+    class RestaurantViewHolder(
         private val binding: ItemCategoriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 

@@ -1,12 +1,17 @@
 package com.example.restaurant
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.restaurant.databinding.ActivityMainBinding
 import com.example.restaurant.databinding.FragmentCategoriesBinding
-import com.example.restaurant.databinding.ItemCategoriesBinding
+import com.google.android.material.bottomnavigation.BottomNavigationMenu
 
 class CategoriesFragment: Fragment(R.layout.fragment_categories) {
 
@@ -14,15 +19,50 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
         super.onCreate(savedInstanceState)
         var inflater = LayoutInflater.from(context)
         val binding = FragmentCategoriesBinding.inflate(inflater)
+        //val categoriesAdapter = CategoriesAdapter()
 
-        var categoriesAdapter = CatAdapter(RestaurantRepository.categoriesList)
+        var recycler = view.findViewById<RecyclerView>(R.id.categoriesRecycler)
+        RestaurantRepository.callGetCategories(requireContext())
+        var test =""
+        Handler().postDelayed(
+          {
+              binding.apply {
+                  recycler.apply {
+                      adapter= CatAdapter(RestaurantRepository.categoriesList,onClick = { CategoriesModel ->
+                          var test = CategoriesModel
+                          Toast.makeText(context,"this is test value $test:",Toast.LENGTH_SHORT).show()
 
-        binding.apply {
-               categoriesRecycler.apply {
-               adapter= categoriesAdapter
-               layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-                   //(adapter as CatAdapter).notifyDataSetChanged()
-           }
-        }
+                          RestaurantRepository.callGetMenu(test,context)
+                          Handler().postDelayed({
+                              Toast.makeText(context,"we just requested callget menu: ${RestaurantRepository.menuList}",Toast.LENGTH_LONG).show()
+                                    var manager =  parentFragmentManager
+                              manager.beginTransaction()
+                                      .replace(R.id.categories_container, MenuFragment())
+                                      .commit()
+                                      //MainActivity().swapFragmentsForecast(MenuFragment())
+                          },2000)
+
+                          Toast.makeText(context,"this is the category that was clicked $test" ,Toast.LENGTH_SHORT).show()
+
+                  })
+                      //CategoriesAdapter(onClick = { CategoriesModel -> }).submitList(RestaurantRepository.categoriesList)
+                      layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+                      //layoutManager = LinearLayoutManager(context)
+                    // CategoriesAdapter(){CategoriesModel ->
+                       //   var categorieName = CategoriesModel.name
+                         // Toast.makeText(context,"this is the category that was clicked" ,Toast.LENGTH_LONG).show()
+                     // }
+                     // CategoriesAdapter(onClick= {CategoriesModel ->  var categorieName = CategoriesModel.name
+                        //   Toast.makeText(context,"this is the category that was clicked" ,Toast.LENGTH_LONG).show()}).submitList(RestaurantRepository.categoriesList)
+
+                      //(adapter as CatAdapter).notifyDataSetChanged()
+                      // CategoriesAdapter.submitList(RestaurantRepository.categoriesList)
+                  }
+              }
+
+        },
+        3000 // value in milliseconds
+         )
+
     }
 }

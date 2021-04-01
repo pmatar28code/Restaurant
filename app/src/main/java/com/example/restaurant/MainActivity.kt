@@ -14,31 +14,34 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-        RestaurantRepository.callGetCategories(context)
-        Toast.makeText(context,"calling getCategories()", Toast.LENGTH_LONG).show()
+
+
+        //RestaurantRepository.callGetCategories(context)
+        // Toast.makeText(context,"calling getCategories()", Toast.LENGTH_LONG).show()
 
 
         Handler().postDelayed(
-            {
-                Toast.makeText(context,"entering post delayed",Toast.LENGTH_LONG).show()
+                {
+                    //  Toast.makeText(context,"entering post delayed",Toast.LENGTH_LONG).show()
 
-                var test = RestaurantRepository.categoriesList[0]
-                Toast.makeText(context,"test var in main: ${RestaurantRepository.categoriesList[0]}",Toast.LENGTH_LONG).show()
+//                var test = RestaurantRepository.menuList[0].name
+                    //    Toast.makeText(context,"test var in main: ${RestaurantRepository.menuList[0].name}",Toast.LENGTH_LONG).show()
 
-                binding.testText.text = test
-
-                swapFragmentsForecast(CategoriesFragment())
-            },
-            4000 // value in milliseconds
+                    // binding.testText.text = test
+                    swapFragments(CategoriesFragment())
+                },
+                1000 // value in milliseconds
         )
 
     }
 
-    private fun swapFragmentsForecast(fragment: Fragment) {
+    fun swapFragments(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.categories_container, fragment)
-            .commit()
+                .replace(R.id.categories_container, fragment)
+                .commit()
     }
+
+
 }
