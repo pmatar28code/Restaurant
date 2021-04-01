@@ -29,9 +29,9 @@ class MenuFragment: Fragment(R.layout.fragment_menu) {
                     binding.apply {
                         recycler.apply {
                             adapter= MenuAdapter(RestaurantRepository.menuList,onClick = { MenuModel,position ->
+                                RestaurantRepository.MenuObject = MenuModel
                                 var test = MenuModel
-                                val intent = Intent(context,
-                                    DetailsActivity::class.java)
+                                val intent = Intent(context, DetailsActivity::class.java)
 
                                 intent.putExtra("position",position.toString())
                                 intent.putExtra("name",test.name)
@@ -62,8 +62,7 @@ class MenuFragment: Fragment(R.layout.fragment_menu) {
                     }
 
                 },
-                3000 // value in milliseconds
+                500 // value in milliseconds
         )
-
     }
 }

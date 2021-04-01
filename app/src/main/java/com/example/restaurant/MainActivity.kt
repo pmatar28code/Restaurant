@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         var binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        var getIntent = intent.getStringExtra("change")
+        Toast.makeText(this,"this is the intent ${getIntent}",Toast.LENGTH_LONG).show()
 
 
         //RestaurantRepository.callGetCategories(context)
@@ -24,18 +26,28 @@ class MainActivity : AppCompatActivity() {
 
         Handler().postDelayed(
                 {
-                    //  Toast.makeText(context,"entering post delayed",Toast.LENGTH_LONG).show()
-
-//                var test = RestaurantRepository.menuList[0].name
-                    //    Toast.makeText(context,"test var in main: ${RestaurantRepository.menuList[0].name}",Toast.LENGTH_LONG).show()
-
-                    // binding.testText.text = test
-                    swapFragments(CategoriesFragment())
+                    if(getIntent!=null){
+                        binding.menu.selectedItemId=R.id.order
+                       // RestaurantRepository.categoriesList.clear()
+                        RestaurantRepository.menuList.clear()
+                    }else{
+                        binding.menu.selectedItemId=R.id.categories
+                        //RestaurantRepository.categoriesList.clear()
+                        RestaurantRepository.menuList.clear()
+                    }
                 },
-                1000 // value in milliseconds
+                2000 // value in milliseconds
         )
 
+        binding.menu.setOnNavigationItemSelectedListener {
+            handeBottonNavigation(it.itemId,binding)
+        }
+        //binding.menu.selectedItemId=R.id.categories
     }
+
+
+
+
 
     fun swapFragments(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
@@ -43,5 +55,20 @@ class MainActivity : AppCompatActivity() {
                 .commit()
     }
 
+    private fun handeBottonNavigation(menuItemId:Int, binding:ActivityMainBinding):Boolean {
+        return when(menuItemId){
+            R.id.categories -> {
+                RestaurantRepository.categoriesList.clear()
+                swapFragments(CategoriesFragment())
+                true
+            }
+            R.id.order -> {
+                swapFragments(OrderFragment())
+                true
+            }
+
+            else -> false
+        }
+    }
 
 }

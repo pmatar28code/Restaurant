@@ -29,10 +29,10 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
               binding.apply {
                   recycler.apply {
                       adapter= CatAdapter(RestaurantRepository.categoriesList,onClick = { CategoriesModel ->
-                          var test = CategoriesModel
-                          Toast.makeText(context,"this is test value $test:",Toast.LENGTH_SHORT).show()
-
-                          RestaurantRepository.callGetMenu(test,context)
+                          var category = CategoriesModel
+                          Toast.makeText(context,"this is test value $category:",Toast.LENGTH_SHORT).show()
+                          RestaurantRepository.menuList.clear()
+                          RestaurantRepository.callGetMenu(category,context)
                           Handler().postDelayed({
                               Toast.makeText(context,"we just requested callget menu: ${RestaurantRepository.menuList}",Toast.LENGTH_LONG).show()
                                     var manager =  parentFragmentManager
@@ -40,9 +40,9 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
                                       .replace(R.id.categories_container, MenuFragment())
                                       .commit()
                                       //MainActivity().swapFragmentsForecast(MenuFragment())
-                          },2000)
+                          },500)
 
-                          Toast.makeText(context,"this is the category that was clicked $test" ,Toast.LENGTH_SHORT).show()
+                          Toast.makeText(context,"this is the category that was clicked $category" ,Toast.LENGTH_SHORT).show()
 
                   })
                       //CategoriesAdapter(onClick = { CategoriesModel -> }).submitList(RestaurantRepository.categoriesList)
@@ -61,7 +61,7 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
               }
 
         },
-        3000 // value in milliseconds
+        500 // value in milliseconds
          )
 
     }

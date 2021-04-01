@@ -14,6 +14,9 @@ object RestaurantRepository {
     var menuList = mutableListOf<MenuServer.Item>()
     var categoriesList = mutableListOf<String>()
     var string = ""
+    var MenuObject:MenuServer.Item?=null
+    var orderList = mutableListOf<MenuServer.Item>()
+
     fun callGetCategories(context:Context){
 
             CategoriesClient.categoriesService.getCategories().
@@ -42,7 +45,6 @@ object RestaurantRepository {
     }
 
     fun callGetMenu(menu :String,context: Context){
-
         MenuClient.MenuService.getMenu(menu).
         enqueue(object : Callback<MenuServer> {
             override fun onFailure(call: Call<MenuServer>, t: Throwable) {
@@ -63,14 +65,19 @@ object RestaurantRepository {
                         }
                     }
                     // Toast.makeText(context,"this is the list after func called in repository${menuList?.get(0)}",Toast.LENGTH_SHORT).show()
-
                 }
             }
         })
     }
 
-
-    data class CategoriesModel(var name:String)
-
-
+     private fun MenuServer.Item.toToServer():MenuServer.Item{
+        return MenuServer.Item(
+                name = name,
+                imageUrl = imageUrl,
+                category = category,
+                description = description,
+                id = id,
+                price = price
+        )
+    }
 }
