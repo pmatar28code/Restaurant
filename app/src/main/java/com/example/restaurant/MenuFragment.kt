@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.FragmentCategoriesBinding
+import com.example.restaurant.databinding.FragmentDetailsBinding
 import com.example.restaurant.databinding.FragmentMenuBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.concurrent.fixedRateTimer
 
 class MenuFragment: Fragment(R.layout.fragment_menu) {
@@ -31,7 +33,8 @@ class MenuFragment: Fragment(R.layout.fragment_menu) {
                             adapter= MenuAdapter(RestaurantRepository.menuList,onClick = { MenuModel,position ->
                                 RestaurantRepository.MenuObject = MenuModel
                                 var test = MenuModel
-                                val intent = Intent(context, DetailsActivity::class.java)
+                                val intent = Intent(context,MainActivity::class.java)
+                                intent.putExtra("details","details")
 
                                 intent.putExtra("position",position.toString())
                                 intent.putExtra("name",test.name)
@@ -47,9 +50,15 @@ class MenuFragment: Fragment(R.layout.fragment_menu) {
 
                             },addToOnClick = {MenuModel ->
                                 RestaurantRepository.orderList.add(MenuModel)
+                                var intent = Intent(context,MainActivity::class.java)
+                                intent.putExtra("change","change")
+                                startActivity(intent)
+
+
                             })
                             //CategoriesAdapter(onClick = { CategoriesModel -> }).submitList(RestaurantRepository.categoriesList)
                             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+                            setHasFixedSize(true)
                             //layoutManager = LinearLayoutManager(context)
                             // CategoriesAdapter(){CategoriesModel ->
                             //   var categorieName = CategoriesModel.name

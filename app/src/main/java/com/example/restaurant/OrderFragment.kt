@@ -1,5 +1,6 @@
 package com.example.restaurant
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,9 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                                 // booksListFromRepo.removeAt(position)
                                 RestaurantRepository.orderList.removeAt(position)
                                 adapter?.notifyDataSetChanged()
+                                var intent = Intent(context,MainActivity::class.java)
+                                intent.putExtra("change","change")
+                                startActivity(intent)
 
                                 // a way to refresh mainActivity, to get recycler view show changes
                             }
@@ -53,6 +57,7 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                 layoutManager = LinearLayoutManager(context,
                         LinearLayoutManager.VERTICAL,
                         false)
+                setHasFixedSize(true)
                 adapter?.notifyDataSetChanged()
 
             }

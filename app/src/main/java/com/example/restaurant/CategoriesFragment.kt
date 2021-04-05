@@ -47,6 +47,7 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
                   })
                       //CategoriesAdapter(onClick = { CategoriesModel -> }).submitList(RestaurantRepository.categoriesList)
                       layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+                      setHasFixedSize(true)
                       //layoutManager = LinearLayoutManager(context)
                     // CategoriesAdapter(){CategoriesModel ->
                        //   var categorieName = CategoriesModel.name

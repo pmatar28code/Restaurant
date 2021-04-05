@@ -3,15 +3,12 @@ package com.example.restaurant
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import com.example.restaurant.Networking.MenuClient
-import com.example.restaurant.Networking.MenuService
 import com.example.restaurant.databinding.ActivityDetailsBinding
-import com.example.restaurant.databinding.ActivityMainBinding
 import com.squareup.picasso.Picasso
+
+//This activity is not being used
 
 class DetailsActivity: AppCompatActivity() {
     var context = this
@@ -33,7 +30,9 @@ class DetailsActivity: AppCompatActivity() {
         setContent(binding,name,description,imageUrl,price,position,testingRepoObject!!)
 
         binding.button.setOnClickListener {
-           RestaurantRepository.orderList.add(testingRepoObject!!)
+            RestaurantRepository.orderList.add(testingRepoObject!!)
+
+            //MainActivity().updateBadge()
             Toast.makeText(this,"this is the item added to order list ${RestaurantRepository.orderList[0].name}",Toast.LENGTH_LONG).show()
             var intent = Intent(this,MainActivity::class.java)
             intent.putExtra("change","change")

@@ -1,14 +1,27 @@
 package com.example.restaurant
 
 import android.content.Context
+import android.media.Image
+import android.service.voice.VoiceInteractionSession
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewManager
+import android.widget.ImageView
 import android.widget.Toast
 import com.example.restaurant.Networking.CategoriesClient
 import com.example.restaurant.Networking.MenuClient
+import com.example.restaurant.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenu
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.internal.NavigationMenu
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.security.AccessController.getContext
+import kotlin.coroutines.coroutineContext
 
 object RestaurantRepository {
     var menuList = mutableListOf<MenuServer.Item>()
@@ -16,6 +29,7 @@ object RestaurantRepository {
     var string = ""
     var MenuObject:MenuServer.Item?=null
     var orderList = mutableListOf<MenuServer.Item>()
+
 
     fun callGetCategories(context:Context){
 
