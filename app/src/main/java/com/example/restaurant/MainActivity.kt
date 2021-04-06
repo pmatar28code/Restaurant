@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         var getIntent = intent.getStringExtra("change")
         var getIntentDetails = intent.getStringExtra("details")
+        var getIntentConfirmation = intent.getStringExtra("confirmation")
         Toast.makeText(this,"this is the intent ${getIntent}",Toast.LENGTH_LONG).show()
 
 
@@ -37,6 +38,9 @@ class MainActivity : AppCompatActivity() {
                     }else if(getIntentDetails == "details"){
                         swapFragments(DetailsFragment())
                         getIntentDetails =""
+                    }else if (getIntentConfirmation == "confirmation"){
+                        swapFragments((ConfirmationFragment()))
+                        getIntentConfirmation = ""
                     }
 
                     else{
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                         RestaurantRepository.menuList.clear()
                     }
                 },
-                2000 // value in milliseconds
+                300 // value in milliseconds
         )
 
         binding.menu.setOnNavigationItemSelectedListener {

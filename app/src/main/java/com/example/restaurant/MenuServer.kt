@@ -22,6 +22,8 @@ data class MenuServer(
         @Json(name = "name")
         val name: String,
         @Json(name = "price")
-        val price: Double
+        val price: Double,
+        @Json(name = "estimated_prep_time")
+        var estimatedPrepTime :Int
     )
 }

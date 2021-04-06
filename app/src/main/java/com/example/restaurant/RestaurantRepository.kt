@@ -12,11 +12,14 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.example.restaurant.Networking.CategoriesClient
 import com.example.restaurant.Networking.MenuClient
+import com.example.restaurant.Networking.MenuClient.ids
 import com.example.restaurant.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenu
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.internal.ManufacturerUtils
 import com.google.android.material.internal.NavigationMenu
+import okhttp3.Cache.Companion.key
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +32,8 @@ object RestaurantRepository {
     var string = ""
     var MenuObject:MenuServer.Item?=null
     var orderList = mutableListOf<MenuServer.Item>()
+    var totalPrepTime: Int = 0
+    var totalCheckAmount: Double = 0.0
 
 
     fun callGetCategories(context:Context){
@@ -83,6 +88,52 @@ object RestaurantRepository {
             }
         })
     }
+    fun getOrderIdsList():List<Keys>{
+        var list = mutableListOf<Keys>()
+
+        for(item in orderList){
+            var keys = Keys(item.id.toString())
+            list.add(keys)
+        }
+        return list.toList()
+        //var newStringList = mutableListOf<String>()
+        //for(item in mutableList){
+          //  var id =  item.id.toString()
+            //newStringList.add( id)
+       // }
+       // return    newStringList.toList()
+
+    }
+    var ids : List<String> = emptyList()
+    fun post(context: Context){
+        //getOrderIdsList(RestaurantRepository.orderList)
+        MenuClient.MenuService.sendItems(getOrderIdsList()).enqueue(object: Callback<String>{
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                TODO("Not yet implemented")
+                Toast.makeText(context,"ERRORRR: $t",Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                TODO("Not yet implemented")
+                Toast.makeText(context,"this message: ${response.body()}",Toast.LENGTH_LONG).show()
+            }
+
+        })
+    }
+
+    fun getCheckTotal(){
+        var oderList = orderList
+        for(item in orderList){
+            totalCheckAmount += item.price
+        }
+    }
+
+    fun getTotalPrepTime(){
+       var orderList =  RestaurantRepository.orderList
+        for(item in orderList){
+            totalPrepTime += item.estimatedPrepTime
+       }
+    }
 
      private fun MenuServer.Item.toToServer():MenuServer.Item{
         return MenuServer.Item(
@@ -91,7 +142,8 @@ object RestaurantRepository {
                 category = category,
                 description = description,
                 id = id,
-                price = price
+                price = price,
+                estimatedPrepTime = estimatedPrepTime
         )
     }
 }

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemCategoriesBinding
 import com.example.restaurant.models.CategoriesModel
 import com.squareup.picasso.Picasso
-
+//This is the one i used
 class CatAdapter(
         private val items:List<String>,
         private val onClick:(String)-> Unit
@@ -39,6 +39,7 @@ class CatAdapter(
         var dessertsImage = "http://192.168.1.191:8090/images/desserts.png"
         var sandwichesImage = "http://192.168.1.191:8090/images/sandwiches.png"
 
+        // i added images to the server, thats why i asked to please use my server attached
         when (item) {
             "appetizers" -> {
                 Picasso.get().load(appetizersImage).into(holder.itemView

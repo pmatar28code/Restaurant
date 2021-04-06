@@ -62,6 +62,7 @@ fun setContent(binding: FragmentDetailsBinding, name:String, description:String,
     view?.findViewById<TextView>(R.id.frag_details_price_text)?.text = "Price: $${testing.price}"
         //for testing
         //detailsTimeText.text = "position: ${testing.name}"
+    view?.findViewById<TextView>(R.id.details_prep_time)?.text = "Estimated Prep Time: " + testing.estimatedPrepTime.toString() + " Minutes"
 
 
     }

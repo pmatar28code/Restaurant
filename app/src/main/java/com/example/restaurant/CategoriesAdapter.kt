@@ -7,13 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemCategoriesBinding
 import com.example.restaurant.models.CategoriesModel
-
-
+// I didnt use this List Adapter because i was having a hard time to set the onclicks on activity
+// i used the CatAdapter instead
 class CategoriesAdapter(
         private var onClick: (CategoriesModel) -> Unit
 ) : ListAdapter<String, CategoriesAdapter.RestaurantViewHolder>(diff) {
-
-
     companion object {
         private val diff = object : DiffUtil.ItemCallback<String>() {
             override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
@@ -39,11 +37,6 @@ class CategoriesAdapter(
         var Cname = CategoriesModel(item)
             onClick (Cname)
         }
-
-        //var item = getItem(position)
-        //var icon = item.artworkUrl100
-       // Picasso.get().load(icon).into(holder.itemView
-        //    .findViewById<ImageView>(R.id.image))
     }
 
     class RestaurantViewHolder(
@@ -52,7 +45,6 @@ class CategoriesAdapter(
 
         fun onBind(title: String) {
             binding.categorie.text =title
-
         }
     }
 }
