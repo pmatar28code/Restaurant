@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemCategoriesBinding
 import com.example.restaurant.models.CategoriesModel
+
 // I didnt use this List Adapter because i was having a hard time to set the onclicks on activity
 // i used the CatAdapter instead
+
 class CategoriesAdapter(
         private var onClick: (CategoriesModel) -> Unit
 ) : ListAdapter<String, CategoriesAdapter.RestaurantViewHolder>(diff) {
@@ -17,7 +19,6 @@ class CategoriesAdapter(
             override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
                 return areContentsTheSame(oldItem, newItem)
             }
-
             override fun areContentsTheSame(oldItem:String, newItem: String): Boolean {
                 return oldItem == newItem
             }

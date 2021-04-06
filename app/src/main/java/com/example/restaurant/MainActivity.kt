@@ -1,11 +1,10 @@
 package com.example.restaurant
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.restaurant.databinding.ActivityMainBinding
 
@@ -19,14 +18,6 @@ class MainActivity : AppCompatActivity() {
         var getIntent = intent.getStringExtra("change")
         var getIntentDetails = intent.getStringExtra("details")
         var getIntentConfirmation = intent.getStringExtra("confirmation")
-        Toast.makeText(this,"this is the intent ${getIntent}",Toast.LENGTH_LONG).show()
-
-
-
-
-        //RestaurantRepository.callGetCategories(context)
-        // Toast.makeText(context,"calling getCategories()", Toast.LENGTH_LONG).show()
-
 
         Handler().postDelayed(
                 {
@@ -41,9 +32,7 @@ class MainActivity : AppCompatActivity() {
                     }else if (getIntentConfirmation == "confirmation"){
                         swapFragments((ConfirmationFragment()))
                         getIntentConfirmation = ""
-                    }
-
-                    else{
+                    } else{
                         binding.menu.selectedItemId=R.id.categories
                         //RestaurantRepository.categoriesList.clear()
                         RestaurantRepository.menuList.clear()
@@ -54,15 +43,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.menu.setOnNavigationItemSelectedListener {
             handeBottonNavigation(it.itemId,binding)
-
         }
-        //binding.menu.selectedItemId=R.id.categories
         var orderBadgeNumber = RestaurantRepository.orderList.size
         binding.menu.refreshDrawableState()
         binding.menu.getOrCreateBadge(R.id.order).number=orderBadgeNumber
-
-
-
     }
 
     fun swapFragments(fragment: Fragment) {
@@ -82,11 +66,10 @@ class MainActivity : AppCompatActivity() {
                 swapFragments(OrderFragment())
                 true
             }
-
             else -> false
         }
     }
-
+    //was using this method, but at the end it handled itself
     fun updateBadge(){
         var count = RestaurantRepository.orderList.size
         var context = this
@@ -94,5 +77,4 @@ class MainActivity : AppCompatActivity() {
         var binding = ActivityMainBinding.inflate(inflater)
         binding.menu.getOrCreateBadge(R.id.order).number = count
     }
-
 }

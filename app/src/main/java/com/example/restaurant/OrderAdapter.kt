@@ -6,19 +6,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemOrderBinding
-import com.example.restaurant.databinding.ItemsMenuBinding
 import com.squareup.picasso.Picasso
 
 class OrderAdapter(
         private val items:List<MenuServer.Item>
-        //private val onClick:(MenuServer.Item,pos:Int)-> Unit
 ): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             :OrderViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemOrderBinding.inflate(
-                layoutInflater, parent, false)
+        layoutInflater, parent, false)
         return OrderViewHolder(binding)
     }
 
@@ -34,12 +32,6 @@ class OrderAdapter(
         Log.d("ADDAAAPPTEERRR",icon)
         Picasso.get().load(icon).into(holder.itemView
                 .findViewById<ImageView>(R.id.order_image))
-
-
-        //holder.itemView.setOnClickListener {
-         //   onClick(item,position)
-       // }
-
     }
 
     class OrderViewHolder(
@@ -49,9 +41,7 @@ class OrderAdapter(
             binding.apply {
                 orderNameText.text = "Item: ${current.name}"
                 orderPriceText.text = "Price: ${current.price}"
-
             }
-
         }
     }
 }

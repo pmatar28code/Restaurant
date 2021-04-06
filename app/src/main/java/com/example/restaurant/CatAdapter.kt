@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemCategoriesBinding
 import com.example.restaurant.models.CategoriesModel
 import com.squareup.picasso.Picasso
+
 //This is the one i used
+
 class CatAdapter(
         private val items:List<String>,
         private val onClick:(String)-> Unit
@@ -30,7 +32,6 @@ class CatAdapter(
         holder.itemView.setOnClickListener {
             var new = CategoriesModel(item)
             onClick(item)
-
         }
         var appetizersImage = "http://192.168.1.191:8090/images/appetizers.png"
         var saladsImage = "http://192.168.1.191:8090/images/salads.png"

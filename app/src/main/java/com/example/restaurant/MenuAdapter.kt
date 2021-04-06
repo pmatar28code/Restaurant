@@ -1,17 +1,12 @@
 package com.example.restaurant
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.restaurant.databinding.ItemCategoriesBinding
 import com.example.restaurant.databinding.ItemsMenuBinding
-import com.example.restaurant.models.CategoriesModel
 import com.squareup.picasso.Picasso
-import kotlin.coroutines.coroutineContext
 
 class MenuAdapter(
         private val items:List<MenuServer.Item>,
@@ -36,10 +31,8 @@ class MenuAdapter(
 
         var icon = item.imageUrl
        icon =  icon.replace("localhost","192.168.1.191")
-        Log.d("ADDAAAPPTEERRR",icon)
         Picasso.get().load(icon).into(holder.itemView
             .findViewById<ImageView>(R.id.menu_image))
-
 
         holder.itemView.setOnClickListener {
             onClick(item,position)
@@ -47,7 +40,6 @@ class MenuAdapter(
         holder.itemView.findViewById<Button>(R.id.menu_add_to_cart_button).setOnClickListener {
             addToOnClick(item)
         }
-
     }
 
     class MenuViewHolder(
@@ -59,7 +51,6 @@ class MenuAdapter(
                 menuPriceText.text = "Price:$${current.price}"
 
             }
-
         }
     }
 }

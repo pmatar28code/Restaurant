@@ -23,6 +23,7 @@ data class MenuServer(
         val name: String,
         @Json(name = "price")
         val price: Double,
+        //this i got it by modifying server to give estimated prep time
         @Json(name = "estimated_prep_time")
         var estimatedPrepTime :Int
     )

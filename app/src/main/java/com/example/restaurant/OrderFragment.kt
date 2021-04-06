@@ -10,9 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.restaurant.databinding.DialogSubmitBinding
 import com.example.restaurant.databinding.FragmentOrderBinding
-
 
 class OrderFragment:Fragment(R.layout.fragment_order) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,57 +24,52 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                 adapter = OrderAdapter(RestaurantRepository.orderList)
 
                 val itemTouchHelper = ItemTouchHelper(
-                        object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT
+                        object : ItemTouchHelper.SimpleCallback(
+                                0, ItemTouchHelper.RIGHT
                         ) {
                             override fun onMove(recyclerView: RecyclerView,
-                                                viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                            viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder
+                            ): Boolean {
                                 val fromPos = viewHolder.adapterPosition
                                 val toPos = target.adapterPosition
                                 // move item in `fromPos` to `toPos` in adapter.
                                 return true // true if moved, false otherwise
                             }
 
-                            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int ) {
+                            override fun onSwiped(viewHolder: RecyclerView.ViewHolder,
+                            direction: Int) {
                                 // remove from adapter
-
                                 var position: Int = viewHolder.adapterPosition
-                                var orderListFromRepo = RestaurantRepository.orderList
-                                // booksListFromRepo.removeAt(position)
+                                var orderListFromRepo =
+                                RestaurantRepository.orderList
                                 RestaurantRepository.orderList.removeAt(position)
                                 adapter?.notifyDataSetChanged()
-                                var intent = Intent(context,MainActivity::class.java)
-                                intent.putExtra("change","change")
+                                var intent = Intent(context, MainActivity::class.java)
+                                intent.putExtra("change", "change")
                                 startActivity(intent)
-
-                                // a way to refresh mainActivity, to get recycler view show changes
                             }
-
                         })
 
                 itemTouchHelper.attachToRecyclerView(this)
 
                 layoutManager = LinearLayoutManager(context,
-                        LinearLayoutManager.VERTICAL,
-                        false)
+                LinearLayoutManager.VERTICAL, false)
                 setHasFixedSize(true)
                 adapter?.notifyDataSetChanged()
-
             }
-                //adapter =  OrderAdapter(RestaurantRepository.orderList)
-                //layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-               //********
+
             RestaurantRepository.totalCheckAmount = 0.0
-                RestaurantRepository.getCheckTotal()
-                var orderText = view.findViewById<TextView>(R.id.order_title_text)
-
-                orderText.text = "Your Order Total: ${RestaurantRepository.totalCheckAmount}"
+            RestaurantRepository.getCheckTotal()
+            var orderText = view.findViewById<TextView>(R.id.order_title_text)
+            orderText.text = "Your Order Total: ${RestaurantRepository.totalCheckAmount}"
             var orderButton = view.findViewById<Button>(R.id.order_submit_button)
-                orderButton.setOnClickListener {
-                    var dialog =  SubmitDialog()
-                    dialog.show(childFragmentManager,"start")
 
+            if (RestaurantRepository.orderList.isNotEmpty()) {
+                orderButton.setOnClickListener {
+                    var dialog = SubmitDialog()
+                    dialog.show(childFragmentManager, "start")
                 }
             }
         }
     }
-//}
+}

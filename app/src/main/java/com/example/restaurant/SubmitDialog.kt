@@ -1,24 +1,15 @@
 package com.example.restaurant
 
-import android.content.Intent
-import com.example.restaurant.databinding.DialogSubmitBinding
-import com.example.restaurant.databinding.FragmentConfirmationBinding
-
-
-
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.Toast
-import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-
+import com.example.restaurant.databinding.DialogSubmitBinding
 
 class SubmitDialog(
-        //val onAdd : (ToDo) -> Unit
 ): DialogFragment() {
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = LayoutInflater.from(requireContext())
@@ -49,30 +40,6 @@ class SubmitDialog(
 
         return builder.create()
     }
-
-    private fun onPositiveSelected(binding:DialogSubmitBinding){
-        //val name = binding.newTodoName.editText?.text?.toString()?:" "
-        //val prioritySelected = binding.priorityOptions.checkedRadioButtonId
-        when{
-            //name.isBlank() -> {
-            //    Toast.makeText(requireContext(),
-             //           "Please enter a todo item",
-             //           Toast.LENGTH_LONG
-            //    ).show()
-          //  }
-           // prioritySelected == -1 -> {
-              //  Toast.makeText(requireContext(),
-              //          "Please select a priority",
-              //          Toast.LENGTH_SHORT
-              //  ).show()
-            //}
-           // else -> {
-                //val priority = Priority.from(prioritySelected)
-               // val toDo = ToDo(name,priority)
-                //onAdd(toDo)
-            }
-        }
-
-    }
+}
 
 

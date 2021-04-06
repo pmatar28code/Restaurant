@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.restaurant.databinding.ActivityDetailsBinding
 import com.squareup.picasso.Picasso
 
-//This activity is not being used
+//This activity is not being used, i changed my mind and used a fragment to continue
+//using bottom nav menu
 
 class DetailsActivity: AppCompatActivity() {
     var context = this
@@ -26,13 +27,10 @@ class DetailsActivity: AppCompatActivity() {
         //for testing
         var testingRepoObject = RestaurantRepository.MenuObject
 
-
         setContent(binding,name,description,imageUrl,price,position,testingRepoObject!!)
 
         binding.button.setOnClickListener {
             RestaurantRepository.orderList.add(testingRepoObject!!)
-
-            //MainActivity().updateBadge()
             Toast.makeText(this,"this is the item added to order list ${RestaurantRepository.orderList[0].name}",Toast.LENGTH_LONG).show()
             var intent = Intent(this,MainActivity::class.java)
             intent.putExtra("change","change")
@@ -51,8 +49,6 @@ class DetailsActivity: AppCompatActivity() {
     }
 }
     fun setContent(binding: ActivityDetailsBinding,name:String,description:String,imageUrl:String,price:String,position:String,testing:MenuServer.Item){
-
-
         binding.apply {
             detailsNameText.text = name
             detailsDescriptionText.text = description
