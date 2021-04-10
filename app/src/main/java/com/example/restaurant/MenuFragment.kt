@@ -38,6 +38,8 @@ class MenuFragment: Fragment(R.layout.fragment_menu) {
 
                             },addToOnClick = {MenuModel ->
                                 RestaurantRepository.orderList.add(MenuModel)
+                                ///
+                                PrefConfing().writeListInPref(requireContext(),RestaurantRepository.orderList)
                                 var intent = Intent(context,MainActivity::class.java)
                                 intent.putExtra("change","change")
                                 startActivity(intent)

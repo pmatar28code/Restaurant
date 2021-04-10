@@ -30,6 +30,7 @@ class SubmitDialog(
                     intent.putExtra("confirmation","confirmation")
                     startActivity(intent)
                     RestaurantRepository.orderList.clear()
+                    //PrefConfing().deletePref(requireContext())
                     //RestaurantRepository.totalCheckAmount=0.0
                 }
                 .setNegativeButton("Cancel"){_ , _ ->

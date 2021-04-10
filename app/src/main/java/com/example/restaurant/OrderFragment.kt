@@ -10,7 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.restaurant.databinding.ActivityMainBinding
 import com.example.restaurant.databinding.FragmentOrderBinding
+import com.google.android.material.bottomnavigation.BottomNavigationMenu
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class OrderFragment:Fragment(R.layout.fragment_order) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -21,7 +25,22 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
 
         binding.apply {
             recycler.apply {
-                adapter = OrderAdapter(RestaurantRepository.orderList)
+                var prefList= if(
+                PrefConfing().readListFromPref(requireContext()).isNotEmpty()){
+                    PrefConfing().readListFromPref(requireContext()).toMutableList()
+                }else{
+                    mutableListOf<MenuServer.Item>()
+                }
+                if(RestaurantRepository.orderList.isEmpty() && prefList.isNotEmpty() ){
+                    for(item in prefList){
+                        RestaurantRepository.orderList.add(item)
+                    }
+                    adapter = OrderAdapter(RestaurantRepository.orderList)
+                }else{
+                    adapter = OrderAdapter(RestaurantRepository.orderList)
+                }
+
+
 
                 val itemTouchHelper = ItemTouchHelper(
                         object : ItemTouchHelper.SimpleCallback(
@@ -44,6 +63,9 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                                 RestaurantRepository.orderList
                                 RestaurantRepository.orderList.removeAt(position)
                                 adapter?.notifyDataSetChanged()
+                                prefList.removeAt(position)
+                                PrefConfing().deletePref(requireContext())
+                                PrefConfing().writeListInPref(requireContext(),prefList.toList())
                                 var intent = Intent(context, MainActivity::class.java)
                                 intent.putExtra("change", "change")
                                 startActivity(intent)
@@ -51,7 +73,6 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                         })
 
                 itemTouchHelper.attachToRecyclerView(this)
-
                 layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.VERTICAL, false)
                 setHasFixedSize(true)
@@ -71,5 +92,6 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                 }
             }
         }
+
     }
 }

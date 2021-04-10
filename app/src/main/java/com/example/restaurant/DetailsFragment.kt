@@ -32,6 +32,9 @@ class DetailsFragment: Fragment(R.layout.fragment_details) {
         var addToOrderButton = view.findViewById<Button>(R.id.frag_details_button)
         addToOrderButton.setOnClickListener{
             RestaurantRepository.orderList.add(testingRepoObject!!)
+            //
+            PrefConfing().writeListInPref(requireContext(),RestaurantRepository.orderList)
+
             var intent = Intent(context,MainActivity::class.java)
             intent.putExtra("change","change")
             startActivity(intent)
