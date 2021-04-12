@@ -1,9 +1,10 @@
-package com.example.restaurant
+package com.example.restaurant.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.restaurant.R
 import com.example.restaurant.databinding.ItemCategoriesBinding
 import com.example.restaurant.models.CategoriesModel
 import com.example.restaurant.repositories.RestaurantRepository
@@ -17,7 +18,7 @@ class CatAdapter(
 ): RecyclerView.Adapter<CatAdapter.CurrentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            :CurrentViewHolder {
+            : CurrentViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemCategoriesBinding.inflate(
                 layoutInflater, parent, false)
@@ -27,7 +28,7 @@ class CatAdapter(
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(
-            holder: CurrentViewHolder,position: Int) {
+            holder: CurrentViewHolder, position: Int) {
         val item = items[position]
         holder.onBind(items[position])
         holder.itemView.setOnClickListener {

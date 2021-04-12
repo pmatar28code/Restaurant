@@ -1,4 +1,4 @@
-package com.example.restaurant
+package com.example.restaurant.Networking
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

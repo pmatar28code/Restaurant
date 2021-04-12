@@ -1,4 +1,4 @@
-package com.example.restaurant
+package com.example.restaurant.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

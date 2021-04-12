@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.restaurant.Networking.MenuServer
 import com.example.restaurant.databinding.FragmentDetailsBinding
 import com.example.restaurant.repositories.RestaurantRepository
 import com.squareup.picasso.Picasso
@@ -43,7 +44,7 @@ class DetailsFragment: Fragment(R.layout.fragment_details) {
     }
 
 fun setContent(binding: FragmentDetailsBinding, name:String, description:String,
-    imageUrl:String, price:String, position:String, testing:MenuServer.Item){
+    imageUrl:String, price:String, position:String, testing: MenuServer.Item){
 
     view?.findViewById<TextView>(R.id.frag_details_name_text)?.text = testing.name
     view?.findViewById<TextView>(R.id.frag_details_text)?.text = testing.description

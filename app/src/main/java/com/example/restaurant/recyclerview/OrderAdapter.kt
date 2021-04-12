@@ -1,10 +1,12 @@
-package com.example.restaurant
+package com.example.restaurant.recyclerview
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.restaurant.Networking.MenuServer
+import com.example.restaurant.R
 import com.example.restaurant.databinding.ItemOrderBinding
 import com.squareup.picasso.Picasso
 
@@ -13,7 +15,7 @@ class OrderAdapter(
 ): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            :OrderViewHolder {
+            : OrderViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemOrderBinding.inflate(
         layoutInflater, parent, false)
@@ -23,7 +25,7 @@ class OrderAdapter(
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(
-            holder: OrderViewHolder,position: Int) {
+            holder: OrderViewHolder, position: Int) {
         val item = items[position]
         holder.onBind(items[position])
 
@@ -37,7 +39,7 @@ class OrderAdapter(
     class OrderViewHolder(
             private val binding: ItemOrderBinding
     ): RecyclerView.ViewHolder(binding.root){
-        fun onBind(current:MenuServer.Item){
+        fun onBind(current: MenuServer.Item){
             binding.apply {
                 orderNameText.text = "Item: ${current.name}"
                 orderPriceText.text = "Price: ${current.price}"

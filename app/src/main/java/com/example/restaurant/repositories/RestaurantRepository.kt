@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat.startActivity
 import com.allyants.notifyme.NotifyMe
-import com.example.restaurant.CategoriesServer
+import com.example.restaurant.Networking.CategoriesServer
 import com.example.restaurant.Keys
 import com.example.restaurant.MainActivity
-import com.example.restaurant.MenuServer
+import com.example.restaurant.Networking.MenuServer
 import com.example.restaurant.Networking.CategoriesClient
 import com.example.restaurant.Networking.MenuClient
 import retrofit2.Call

@@ -1,7 +1,6 @@
 package com.example.restaurant.Networking
 
 import com.example.restaurant.Keys
-import com.example.restaurant.MenuServer
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.restaurant.Networking.MenuServer
 import com.example.restaurant.databinding.ActivityDetailsBinding
 import com.example.restaurant.repositories.RestaurantRepository
 import com.squareup.picasso.Picasso
@@ -49,7 +50,7 @@ class DetailsActivity: AppCompatActivity() {
         }
     }
 }
-    fun setContent(binding: ActivityDetailsBinding,name:String,description:String,imageUrl:String,price:String,position:String,testing:MenuServer.Item){
+    fun setContent(binding: ActivityDetailsBinding,name:String,description:String,imageUrl:String,price:String,position:String,testing: MenuServer.Item){
         binding.apply {
             detailsNameText.text = name
             detailsDescriptionText.text = description

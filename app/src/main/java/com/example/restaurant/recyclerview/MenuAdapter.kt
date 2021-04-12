@@ -1,22 +1,24 @@
-package com.example.restaurant
+package com.example.restaurant.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.restaurant.Networking.MenuServer
+import com.example.restaurant.R
 import com.example.restaurant.databinding.ItemsMenuBinding
 import com.example.restaurant.repositories.RestaurantRepository
 import com.squareup.picasso.Picasso
 
 class MenuAdapter(
         private val items:List<MenuServer.Item>,
-        private val onClick:(MenuServer.Item,pos:Int)-> Unit,
+        private val onClick:(MenuServer.Item, pos:Int)-> Unit,
         private val addToOnClick:(MenuServer.Item)->Unit
 ): RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            :MenuViewHolder {
+            : MenuViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemsMenuBinding.inflate(
                 layoutInflater, parent, false)
@@ -26,7 +28,7 @@ class MenuAdapter(
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(
-            holder: MenuViewHolder,position: Int) {
+            holder: MenuViewHolder, position: Int) {
         val item = items[position]
         holder.onBind(items[position])
 
@@ -46,7 +48,7 @@ class MenuAdapter(
     class MenuViewHolder(
             private val binding: ItemsMenuBinding
     ): RecyclerView.ViewHolder(binding.root){
-        fun onBind(current:MenuServer.Item){
+        fun onBind(current: MenuServer.Item){
             binding.apply {
                 menuText.text = current.name
                 menuPriceText.text = "Price:$${current.price}"
