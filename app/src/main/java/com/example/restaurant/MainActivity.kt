@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 updateBadge(binding)
                     }
                 },
-                600 // value in milliseconds
+                800 // value in milliseconds
         )
 
         binding.menu.setOnNavigationItemSelectedListener {
