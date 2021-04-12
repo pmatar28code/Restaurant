@@ -16,7 +16,8 @@ class SubmitDialog(
         val binding = DialogSubmitBinding.inflate(inflater)
         RestaurantRepository.totalCheckAmount =0.0
         RestaurantRepository.getCheckTotal()
-        binding.dialogText.text = "Are you sure you want to order this items?, your total $${RestaurantRepository.totalCheckAmount.toString()}"
+        binding.dialogText.text = "Are you sure you want to order this items?," +
+        " your total $${RestaurantRepository.totalCheckAmount.toString()}"
 
         val builder = AlertDialog.Builder(requireContext())
                 .setView(binding.root)

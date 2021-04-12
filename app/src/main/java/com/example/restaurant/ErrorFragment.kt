@@ -12,7 +12,6 @@ class ErrorFragment: Fragment(R.layout.fragment_error) {
         super.onCreate(savedInstanceState)
         var inflater = LayoutInflater.from(context)
         val binding = FragmentErrorBinding.inflate(inflater)
-
         var errorText = view.findViewById<TextView>(R.id.error_text)
         errorText.text = "Error: Server not available"
     }

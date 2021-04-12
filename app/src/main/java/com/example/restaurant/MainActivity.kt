@@ -6,13 +6,11 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.example.restaurant.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.notificationman.library.NotificationMan
 
 class MainActivity : AppCompatActivity() {
@@ -42,34 +40,39 @@ class MainActivity : AppCompatActivity() {
             }else if (getIntentConfirmation == "confirmation"){
                 swapFragments((ConfirmationFragment()))
                 getIntentConfirmation = ""
-                //sendNotification()
+                sendNotification()
                 // var test = applicationContext//activity?.applicationContext
                 // RestaurantRepository.createNotifyMe(test,RestaurantRepository.totalPrepTime)
                 //i used a library
                 //to show the notification on x seconds based on 50% of the total prep time
-                var timeInSeconds = RestaurantRepository.getTimeForNotification(RestaurantRepository.totalPrepTime)
+                var timeInSeconds = RestaurantRepository.
+                getTimeForNotification(RestaurantRepository.totalPrepTime)
+
                 fun fireNotificationMan(context : Context) = NotificationMan
                 .Builder(context, "com.notification.man.MainActivity") // make sure class path match with your project architecture
                 .setTitle("Your Restaurant order") // optional
-                .setDescription("Be prepared, its gonna be ready in" +
+                .setDescription("Be prepared,order is gonna be ready in" +
                 " ${RestaurantRepository.notificationPrepTimeRemaining(timeInSeconds)} Minutes") // optional
-                .setThumbnailImageUrl("https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_robot.max-500x500.png") // optional
+                .setThumbnailImageUrl("https://www.presidenteicguadalajara.com/english/" +
+                "resourcefiles/diningsmallimages/bistro-la-bastille-in-presidencial-presidente-" +
+                "intercontinental-guadalajara-mexico-01.jpg?version=3192021103745") // optional
                 .setTimeInterval(timeInSeconds.toLong()) // needs secs - default is 5 secs
                 .setNotificationType(NotificationMan.NOTIFICATION_TYPE_IMAGE) // optional - default type is TEXT
                 .fire()
                 fireNotificationMan(applicationContext)
+
                 PrefConfing().deletePref(this)
                 var tempList = RestaurantRepository.orderList
                 PrefConfing().writeListInPref(this,tempList)
                 //This error message takes like 5 seconds to show
-                    }else if(getIntentError == "error"){
-                        swapFragments(ErrorFragment())
-                        getIntentError = ""
-                    }else{
-                        binding.menu.selectedItemId=R.id.categories
-                        //RestaurantRepository.categoriesList.clear()
-                        RestaurantRepository.menuList.clear()
-                        updateBadge(binding)
+            }else if(getIntentError == "error"){
+                swapFragments(ErrorFragment())
+                getIntentError = ""
+            }else{
+                binding.menu.selectedItemId=R.id.categories
+                //RestaurantRepository.categoriesList.clear()
+                RestaurantRepository.menuList.clear()
+                updateBadge(binding)
                     }
                 },
                 300 // value in milliseconds
@@ -120,20 +123,25 @@ class MainActivity : AppCompatActivity() {
             var name = "notifications title"
             var descriptionText = "Description Text"
             var importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID,name,importance).apply {
+            val channel = NotificationChannel(CHANNEL_ID,name,importance)
+            .apply {
                 description = descriptionText
             }
-            val notificationManager:NotificationManager=getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager:NotificationManager=getSystemService(
+            Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
     //I was using this fun , to show a regular notification, instead i used a library
     //to show the notification on x seconds based on 50% of the total prep time
     fun sendNotification(){
-        var builder = NotificationCompat.Builder(this,CHANNEL_ID)
+        var builder = NotificationCompat.Builder(
+        this,CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("example")
-            .setContentText("examples")
+            .setContentTitle("Thank you for your order.")
+            .setContentText("You will recieve a notification in " +
+                    "${RestaurantRepository.getTimeForNotification
+                    (RestaurantRepository.totalPrepTime)/60} minutes.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         with(NotificationManagerCompat.from(this)){
             notify(notificationId,builder.build())

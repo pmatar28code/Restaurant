@@ -41,7 +41,8 @@ class DetailsFragment: Fragment(R.layout.fragment_details) {
         }
     }
 
-fun setContent(binding: FragmentDetailsBinding, name:String, description:String, imageUrl:String, price:String, position:String, testing:MenuServer.Item){
+fun setContent(binding: FragmentDetailsBinding, name:String, description:String,
+    imageUrl:String, price:String, position:String, testing:MenuServer.Item){
 
     view?.findViewById<TextView>(R.id.frag_details_name_text)?.text = testing.name
     view?.findViewById<TextView>(R.id.frag_details_text)?.text = testing.description

@@ -18,6 +18,4 @@ object CategoriesClient {
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
     val categoriesService = client.create(CategoriesService::class.java)
-
-
 }

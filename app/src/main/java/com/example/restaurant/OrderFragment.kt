@@ -41,7 +41,6 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                 }
 
 
-
                 val itemTouchHelper = ItemTouchHelper(
                         object : ItemTouchHelper.SimpleCallback(
                                 0, ItemTouchHelper.RIGHT

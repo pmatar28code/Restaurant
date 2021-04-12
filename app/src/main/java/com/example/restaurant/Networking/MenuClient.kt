@@ -1,13 +1,9 @@
 package com.example.restaurant.Networking
 
-import android.util.Log
 import com.example.restaurant.RestaurantRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -23,9 +19,6 @@ object MenuClient {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     val MenuService = client.create(MenuService::class.java)
-
     var ids = mutableListOf<String>()
     var orderList = RestaurantRepository.orderList
-
-
 }
