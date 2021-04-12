@@ -16,8 +16,8 @@ import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 object RestaurantRepository {
-    var ipAddress = "192.168.1.191"
-    var urlForClients = "http://192.168.1.191:8090"
+    val ipAddress = "192.168.1.191"
+    val urlForClients = "http://${ipAddress}:8090"
     var menuList = mutableListOf<MenuServer.Item>()
     var categoriesList = mutableListOf<String>()
     var string = ""
@@ -25,7 +25,6 @@ object RestaurantRepository {
     var orderList = mutableListOf<MenuServer.Item>()
     var totalPrepTime: Int = 0
     var totalCheckAmount: Double = 0.0
-
 
     fun callGetCategories(context:Context){
         CategoriesClient.categoriesService.getCategories().
