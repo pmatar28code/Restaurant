@@ -9,25 +9,25 @@ import com.google.gson.reflect.TypeToken
 class PrefConfing {
     var LIST_KEY = "list_key"
     fun writeListInPref(context: Context,list:  List<MenuServer.Item>){
-        var gson = Gson()
-        var jsonString = gson.toJson(list)
-    var pref = PreferenceManager.getDefaultSharedPreferences(context)
-     var editor:SharedPreferences.Editor= pref.edit()
+        val gson = Gson()
+        val jsonString = gson.toJson(list)
+    val pref = PreferenceManager.getDefaultSharedPreferences(context)
+     val editor:SharedPreferences.Editor= pref.edit()
         editor.putString(LIST_KEY,jsonString)
         editor.apply()
     }
     fun readListFromPref(context:Context):List<MenuServer.Item>{
-        var pref:SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        var jsonString: String? = pref.getString(LIST_KEY,"")
-        var gson = Gson()
-        var type = object: TypeToken<List<MenuServer.Item>>(){}.type
-        var list:List<MenuServer.Item> ?= gson.fromJson(jsonString,type)?: emptyList()
+        val pref:SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val jsonString: String? = pref.getString(LIST_KEY,"")
+        val gson = Gson()
+        val type = object: TypeToken<List<MenuServer.Item>>(){}.type
+        val list:List<MenuServer.Item> ?= gson.fromJson(jsonString,type)?: emptyList()
         return list!!
     }
 
     fun deletePref(context: Context){
-        var pref = PreferenceManager.getDefaultSharedPreferences(context)
-        var editor:SharedPreferences.Editor= pref.edit()
+        val pref = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor:SharedPreferences.Editor= pref.edit()
         //editor.putString(LIST_KEY,jsonString)
        // editor.apply()
         editor.clear()

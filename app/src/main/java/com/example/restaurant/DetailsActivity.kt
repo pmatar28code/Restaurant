@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.restaurant.databinding.ActivityDetailsBinding
+import com.example.restaurant.repositories.RestaurantRepository
 import com.squareup.picasso.Picasso
 
 //This activity is not being used, i changed my mind and used a fragment to continue
@@ -18,21 +19,21 @@ class DetailsActivity: AppCompatActivity() {
         val binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var name = intent.getStringExtra("name").toString()
-        var description = intent.getStringExtra("description").toString()
-        var imageUrl = intent.getStringExtra("image").toString()
-        var price = intent.getStringExtra("price").toString()
-        var position = intent.getStringExtra("position").toString()
+        val name = intent.getStringExtra("name").toString()
+        val description = intent.getStringExtra("description").toString()
+        val imageUrl = intent.getStringExtra("image").toString()
+        val price = intent.getStringExtra("price").toString()
+        val position = intent.getStringExtra("position").toString()
         Toast.makeText(this,"Details activity price value $price",Toast.LENGTH_LONG).show()
         //for testing
-        var testingRepoObject = RestaurantRepository.MenuObject
+        val testingRepoObject = RestaurantRepository.MenuObject
 
         setContent(binding,name,description,imageUrl,price,position,testingRepoObject!!)
 
         binding.button.setOnClickListener {
             RestaurantRepository.orderList.add(testingRepoObject!!)
             Toast.makeText(this,"this is the item added to order list ${RestaurantRepository.orderList[0].name}",Toast.LENGTH_LONG).show()
-            var intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this,MainActivity::class.java)
             intent.putExtra("change","change")
             startActivity(intent)
             Log.d("toooo FRAAAGGGG","what the hell")

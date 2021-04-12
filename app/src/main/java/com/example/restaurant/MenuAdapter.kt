@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemsMenuBinding
+import com.example.restaurant.repositories.RestaurantRepository
 import com.squareup.picasso.Picasso
 
 class MenuAdapter(
@@ -30,7 +31,7 @@ class MenuAdapter(
         holder.onBind(items[position])
 
         var icon = item.imageUrl
-       icon =  icon.replace("localhost",RestaurantRepository.ipAddress)
+       icon =  icon.replace("localhost", RestaurantRepository.ipAddress)
         Picasso.get().load(icon).into(holder.itemView
             .findViewById<ImageView>(R.id.menu_image))
 

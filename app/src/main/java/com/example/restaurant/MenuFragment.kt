@@ -9,23 +9,24 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.FragmentMenuBinding
+import com.example.restaurant.repositories.RestaurantRepository
 
 class MenuFragment: Fragment(R.layout.fragment_menu) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(context)
         val binding = FragmentMenuBinding.inflate(inflater)
 
-        var recycler = view.findViewById<RecyclerView>(R.id.menu_recycler)
+        val recycler = view.findViewById<RecyclerView>(R.id.menu_recycler)
         var test =""
         Handler().postDelayed(
                 {
                     binding.apply {
                         recycler.apply {
-                            adapter= MenuAdapter(RestaurantRepository.menuList,onClick = { MenuModel,position ->
+                            adapter= MenuAdapter(RestaurantRepository.menuList,onClick = { MenuModel, position ->
                                 RestaurantRepository.MenuObject = MenuModel
-                                var test = MenuModel
+                                val test = MenuModel
                                 val intent = Intent(context,MainActivity::class.java)
                                 intent.putExtra("details","details")
                                 intent.putExtra("position",position.toString())
@@ -39,8 +40,8 @@ class MenuFragment: Fragment(R.layout.fragment_menu) {
                             },addToOnClick = {MenuModel ->
                                 RestaurantRepository.orderList.add(MenuModel)
                                 ///
-                                PrefConfing().writeListInPref(requireContext(),RestaurantRepository.orderList)
-                                var intent = Intent(context,MainActivity::class.java)
+                                PrefConfing().writeListInPref(requireContext(), RestaurantRepository.orderList)
+                                val intent = Intent(context,MainActivity::class.java)
                                 intent.putExtra("change","change")
                                 startActivity(intent)
                             })

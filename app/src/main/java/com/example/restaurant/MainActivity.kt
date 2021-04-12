@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.example.restaurant.databinding.ActivityMainBinding
+import com.example.restaurant.repositories.RestaurantRepository
 import com.notificationman.library.NotificationMan
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var binding = ActivityMainBinding.inflate(layoutInflater)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         creatNotificationChannel()
 
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 // RestaurantRepository.createNotifyMe(test,RestaurantRepository.totalPrepTime)
                 //i used a library
                 //to show the notification on x seconds based on 50% of the total prep time
-                var timeInSeconds = RestaurantRepository.
+                val timeInSeconds = RestaurantRepository.
                 getTimeForNotification(RestaurantRepository.totalPrepTime)
 
                 fun fireNotificationMan(context : Context) = NotificationMan
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 fireNotificationMan(applicationContext)
 
                 PrefConfing().deletePref(this)
-                var tempList = RestaurantRepository.orderList
+                val tempList = RestaurantRepository.orderList
                 PrefConfing().writeListInPref(this,tempList)
                 //This error message takes like 5 seconds to show
             }else if(getIntentError == "error"){
@@ -81,12 +82,12 @@ class MainActivity : AppCompatActivity() {
         binding.menu.setOnNavigationItemSelectedListener {
             handeBottonNavigation(it.itemId,binding)
         }
-        var orderBadgeNumber = RestaurantRepository.orderList.size
+        val orderBadgeNumber = RestaurantRepository.orderList.size
         binding.menu.refreshDrawableState()
         binding.menu.getOrCreateBadge(R.id.order).number=orderBadgeNumber
     }
 
-    fun swapFragments(fragment: Fragment) {
+    private fun swapFragments(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.categories_container, fragment)
                 .commit()
@@ -107,10 +108,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun updateBadge(binding: ActivityMainBinding){
+    private fun updateBadge(binding: ActivityMainBinding){
 
-        var prefList = PrefConfing().readListFromPref(this)
-        var orderBadgeNumber = prefList.size
+        val prefList = PrefConfing().readListFromPref(this)
+        val orderBadgeNumber = prefList.size
          binding.menu.refreshDrawableState()
         // menu.getOrCreateBadge(R.id.order).number=orderBadgeNumber
 
@@ -118,11 +119,11 @@ class MainActivity : AppCompatActivity() {
         binding.menu.getOrCreateBadge(R.id.order).number = orderBadgeNumber
     }
 
-    fun creatNotificationChannel(){
+    private fun creatNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            var name = "notifications title"
-            var descriptionText = "Description Text"
-            var importance = NotificationManager.IMPORTANCE_HIGH
+            val name = "notifications title"
+            val descriptionText = "Description Text"
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID,name,importance)
             .apply {
                 description = descriptionText
@@ -134,8 +135,8 @@ class MainActivity : AppCompatActivity() {
     }
     //I was using this fun , to show a regular notification, instead i used a library
     //to show the notification on x seconds based on 50% of the total prep time
-    fun sendNotification(){
-        var builder = NotificationCompat.Builder(
+    private fun sendNotification(){
+        val builder = NotificationCompat.Builder(
         this,CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Thank you for your order.")

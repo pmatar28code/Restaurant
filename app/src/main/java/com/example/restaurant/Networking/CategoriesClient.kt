@@ -1,6 +1,6 @@
 package com.example.restaurant.Networking
 
-import com.example.restaurant.RestaurantRepository
+import com.example.restaurant.repositories.RestaurantRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient

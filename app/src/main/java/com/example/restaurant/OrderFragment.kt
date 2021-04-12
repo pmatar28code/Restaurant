@@ -10,22 +10,19 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.restaurant.databinding.ActivityMainBinding
 import com.example.restaurant.databinding.FragmentOrderBinding
-import com.google.android.material.bottomnavigation.BottomNavigationMenu
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.restaurant.repositories.RestaurantRepository
 
 class OrderFragment:Fragment(R.layout.fragment_order) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(context)
         val binding = FragmentOrderBinding.inflate(inflater)
         val recycler = view.findViewById<RecyclerView>(R.id.order_recycler)
 
         binding.apply {
             recycler.apply {
-                var prefList= if(
+                val prefList= if(
                 PrefConfing().readListFromPref(requireContext()).isNotEmpty()){
                     PrefConfing().readListFromPref(requireContext()).toMutableList()
                 }else{
@@ -57,7 +54,7 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                             override fun onSwiped(viewHolder: RecyclerView.ViewHolder,
                             direction: Int) {
                                 // remove from adapter
-                                var position: Int = viewHolder.adapterPosition
+                                val position: Int = viewHolder.adapterPosition
                                 var orderListFromRepo =
                                 RestaurantRepository.orderList
                                 RestaurantRepository.orderList.removeAt(position)
@@ -65,7 +62,7 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                                 prefList.removeAt(position)
                                 PrefConfing().deletePref(requireContext())
                                 PrefConfing().writeListInPref(requireContext(),prefList.toList())
-                                var intent = Intent(context, MainActivity::class.java)
+                                val intent = Intent(context, MainActivity::class.java)
                                 intent.putExtra("change", "change")
                                 startActivity(intent)
                             }
@@ -80,13 +77,13 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
 
             RestaurantRepository.totalCheckAmount = 0.0
             RestaurantRepository.getCheckTotal()
-            var orderText = view.findViewById<TextView>(R.id.order_title_text)
+            val orderText = view.findViewById<TextView>(R.id.order_title_text)
             orderText.text = "Your Order Total: ${RestaurantRepository.totalCheckAmount}"
-            var orderButton = view.findViewById<Button>(R.id.order_submit_button)
+            val orderButton = view.findViewById<Button>(R.id.order_submit_button)
 
             if (RestaurantRepository.orderList.isNotEmpty()) {
                 orderButton.setOnClickListener {
-                    var dialog = SubmitDialog()
+                    val dialog = SubmitDialog()
                     dialog.show(childFragmentManager, "start")
                 }
             }

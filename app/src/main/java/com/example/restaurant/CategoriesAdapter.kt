@@ -33,9 +33,9 @@ class CategoriesAdapter(
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
         holder.onBind(getItem(position))
-        var item = getItem(position)
+        val item = getItem(position)
         holder.itemView.setOnClickListener {
-        var Cname = CategoriesModel(item)
+        val Cname = CategoriesModel(item)
             onClick (Cname)
         }
     }

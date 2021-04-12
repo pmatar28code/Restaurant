@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.restaurant.databinding.DialogSubmitBinding
+import com.example.restaurant.repositories.RestaurantRepository
 
 class SubmitDialog(
 ): DialogFragment() {
@@ -21,20 +22,20 @@ class SubmitDialog(
 
         val builder = AlertDialog.Builder(requireContext())
                 .setView(binding.root)
-                .setPositiveButton("Submit"){ _ , _ ->
+                .setPositiveButton(getString(R.string.submit)){ _, _ ->
                     //onPositiveSelected(binding)
                     RestaurantRepository.totalPrepTime = 0
                     RestaurantRepository.totalCheckAmount = 0.0
                     RestaurantRepository.getTotalPrepTime()
                     RestaurantRepository.getCheckTotal()
-                    var intent = Intent(context,MainActivity::class.java)
+                    val intent = Intent(context,MainActivity::class.java)
                     intent.putExtra("confirmation","confirmation")
                     startActivity(intent)
                     RestaurantRepository.orderList.clear()
                     //PrefConfing().deletePref(requireContext())
                     //RestaurantRepository.totalCheckAmount=0.0
                 }
-                .setNegativeButton("Cancel"){_ , _ ->
+                .setNegativeButton(getString(R.string.cancel)){ _, _ ->
                     //do nothing here
                     RestaurantRepository.totalCheckAmount = 0.0
                     RestaurantRepository.totalPrepTime = 0

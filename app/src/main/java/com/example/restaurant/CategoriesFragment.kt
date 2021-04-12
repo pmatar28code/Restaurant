@@ -8,15 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.FragmentCategoriesBinding
+import com.example.restaurant.repositories.RestaurantRepository
 
 class CategoriesFragment: Fragment(R.layout.fragment_categories) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(context)
         val binding = FragmentCategoriesBinding.inflate(inflater)
 
-        var recycler = view.findViewById<RecyclerView>(R.id.categoriesRecycler)
+        val recycler = view.findViewById<RecyclerView>(R.id.categoriesRecycler)
         RestaurantRepository.callGetCategories(requireContext())
         Handler().postDelayed(
           {
@@ -25,11 +26,11 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
                       adapter= CatAdapter(
                       RestaurantRepository.categoriesList,
                       onClick = { CategoriesModel ->
-                          var category = CategoriesModel
+                          val category = CategoriesModel
                           RestaurantRepository.menuList.clear()
                           RestaurantRepository.callGetMenu(category,context)
                           Handler().postDelayed({
-                          var manager =  parentFragmentManager
+                          val manager =  parentFragmentManager
                           manager.beginTransaction()
                           .replace(R.id.categories_container, MenuFragment())
                           .commit()

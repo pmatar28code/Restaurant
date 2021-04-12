@@ -10,9 +10,9 @@ import com.example.restaurant.databinding.FragmentErrorBinding
 class ErrorFragment: Fragment(R.layout.fragment_error) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(context)
         val binding = FragmentErrorBinding.inflate(inflater)
-        var errorText = view.findViewById<TextView>(R.id.error_text)
+        val errorText = view.findViewById<TextView>(R.id.error_text)
         errorText.text = "Error: Server not available"
     }
 }

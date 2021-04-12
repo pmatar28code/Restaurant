@@ -2,4 +2,7 @@
     <string name="app_name">Restaurant</string>
     <string name="testing">test</string>
     <string name="testingDesc">test</string>
+    <string name="thank_you_purchase_text">Thanks you for your purchase</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
 </resources>

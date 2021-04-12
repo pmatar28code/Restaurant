@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurant.databinding.ItemCategoriesBinding
 import com.example.restaurant.models.CategoriesModel
+import com.example.restaurant.repositories.RestaurantRepository
 import com.squareup.picasso.Picasso
 
 //This is the one i used
@@ -33,12 +34,12 @@ class CatAdapter(
             var new = CategoriesModel(item)
             onClick(item)
         }
-        var appetizersImage = RestaurantRepository.urlForClients+"/images/appetizers.png"
-        var saladsImage = RestaurantRepository.urlForClients+"/images/salads.png"
-        var soupsImage = RestaurantRepository.urlForClients+"/images/soups.png"
-        var entreesImage = RestaurantRepository.urlForClients+"/images/entrees.png"
-        var dessertsImage = RestaurantRepository.urlForClients+"/images/desserts.png"
-        var sandwichesImage = RestaurantRepository.urlForClients+"/images/sandwiches.png"
+        val appetizersImage = RestaurantRepository.urlForClients+"/images/appetizers.png"
+        val saladsImage = RestaurantRepository.urlForClients+"/images/salads.png"
+        val soupsImage = RestaurantRepository.urlForClients+"/images/soups.png"
+        val entreesImage = RestaurantRepository.urlForClients+"/images/entrees.png"
+        val dessertsImage = RestaurantRepository.urlForClients+"/images/desserts.png"
+        val sandwichesImage = RestaurantRepository.urlForClients+"/images/sandwiches.png"
 
         // i added images to the server, thats why i asked to please use my server attached
         when (item) {

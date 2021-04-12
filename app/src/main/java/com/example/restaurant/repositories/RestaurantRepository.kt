@@ -1,27 +1,29 @@
-package com.example.restaurant
+package com.example.restaurant.repositories
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat.startActivity
 import com.allyants.notifyme.NotifyMe
+import com.example.restaurant.CategoriesServer
+import com.example.restaurant.Keys
+import com.example.restaurant.MainActivity
+import com.example.restaurant.MenuServer
 import com.example.restaurant.Networking.CategoriesClient
 import com.example.restaurant.Networking.MenuClient
-import com.notificationman.library.NotificationMan
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 object RestaurantRepository {
     val ipAddress = "192.168.1.191"
-    val urlForClients = "http://${ipAddress}:8090"
+    val urlForClients = "http://$ipAddress:8090"
     var menuList = mutableListOf<MenuServer.Item>()
     var categoriesList = mutableListOf<String>()
     var string = ""
-    var MenuObject:MenuServer.Item?=null
+    var MenuObject: MenuServer.Item?=null
     var orderList = mutableListOf<MenuServer.Item>()
     var totalPrepTime: Int = 0
     var totalCheckAmount: Double = 0.0
@@ -31,17 +33,17 @@ object RestaurantRepository {
             enqueue(object : Callback<CategoriesServer> {
                 override fun onFailure(call: Call<CategoriesServer>, t: Throwable) {
                     //this error message takes like 5 seconds to show
-                    var intent = Intent(context,MainActivity::class.java)
+                    val intent = Intent(context, MainActivity::class.java)
                     intent.putExtra("error","error")
                     startActivity(context,intent, Bundle.EMPTY)
                 }
                 override fun onResponse(call: Call<CategoriesServer>,
-                response: Response<CategoriesServer>) {
+                                        response: Response<CategoriesServer>) {
                     if (response.isSuccessful) {
                        // Log.d("Error","${response.body()?.categories}")
                         if(response.body()?.categories?.isEmpty()!!){
                         }
-                        var listServer = response.body()?.categories
+                        val listServer = response.body()?.categories
                         if (listServer != null) {
                             for(item in listServer){
                                 categoriesList.add(item)
@@ -64,7 +66,7 @@ object RestaurantRepository {
                     if(response.body()?.items?.isEmpty()!!){
 
                     }
-                    var newMenuList = response.body()?.items
+                    val newMenuList = response.body()?.items
 
                     if (newMenuList != null) {
                         for(item in newMenuList){
@@ -77,10 +79,10 @@ object RestaurantRepository {
     }
     //This was for Post, but still cant get it to work
     fun getOrderIdsList():List<Keys>{
-        var list = mutableListOf<Keys>()
+        val list = mutableListOf<Keys>()
 
         for(item in orderList){
-            var keys = Keys(item.id.toString())
+            val keys = Keys(item.id.toString())
             list.add(keys)
         }
         return list.toList()
@@ -114,13 +116,13 @@ object RestaurantRepository {
     }
 
     fun getTotalPrepTime(){
-       var orderList =  RestaurantRepository.orderList
+       val orderList = orderList
         for(item in orderList){
             totalPrepTime += item.estimatedPrepTime
        }
     }
 
-     private fun MenuServer.Item.toToServer():MenuServer.Item{
+     private fun MenuServer.Item.toToServer(): MenuServer.Item {
         return MenuServer.Item(
                 name = name,
                 imageUrl = imageUrl,
@@ -134,17 +136,17 @@ object RestaurantRepository {
 
     fun createNotifyMe(context: Context,minutes:Int){
         var hour =Calendar.HOUR
-        var minute = Calendar.MINUTE
+        val minute = Calendar.MINUTE
 
         hour *= 60
         hour +=minute
 
-        var prepTimeMinusTen = minutes - 10
-        var timeNotificationMinutes = hour + prepTimeMinusTen
+        val prepTimeMinusTen = minutes - 10
+        val timeNotificationMinutes = hour + prepTimeMinusTen
 
         var hourToMinutes = timeNotificationMinutes % 60
         var hourToHours = timeNotificationMinutes / 60
-        var calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR,2021)
         calendar.set(Calendar.MONTH,4)
         calendar.set(Calendar.DATE,10)
@@ -153,7 +155,7 @@ object RestaurantRepository {
         calendar.set(Calendar.SECOND,2)
 
         // could not get this library to work.
-        var notifyMe = NotifyMe.Builder(context)
+        val notifyMe = NotifyMe.Builder(context)
         //Then set the fields you want.
         notifyMe.title("Remaining Prep Time")
         notifyMe.content("test")
@@ -169,14 +171,14 @@ object RestaurantRepository {
     }
 
     fun getTimeForNotification(minutes:Int): Int{
-        var toSeconds = minutes * 60
-        var percentage = .50
-        var finalSeconds = percentage * toSeconds
+        val toSeconds = minutes * 60
+        val percentage = .50
+        val finalSeconds = percentage * toSeconds
         return finalSeconds.roundToInt()
     }
 
     fun notificationPrepTimeRemaining(seconds: Int):Double{
-        var minutes = seconds/60
+        val minutes = seconds/60
             return minutes.toDouble()
     }
 }
