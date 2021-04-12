@@ -33,12 +33,12 @@ class CatAdapter(
             var new = CategoriesModel(item)
             onClick(item)
         }
-        var appetizersImage = "http://192.168.1.191:8090/images/appetizers.png"
-        var saladsImage = "http://192.168.1.191:8090/images/salads.png"
-        var soupsImage = "http://192.168.1.191:8090/images/soups.png"
-        var entreesImage = "http://192.168.1.191:8090/images/entrees.png"
-        var dessertsImage = "http://192.168.1.191:8090/images/desserts.png"
-        var sandwichesImage = "http://192.168.1.191:8090/images/sandwiches.png"
+        var appetizersImage = RestaurantRepository.urlForClients+"/images/appetizers.png"
+        var saladsImage = RestaurantRepository.urlForClients+"/images/salads.png"
+        var soupsImage = RestaurantRepository.urlForClients+"/images/soups.png"
+        var entreesImage = RestaurantRepository.urlForClients+"/images/entrees.png"
+        var dessertsImage = RestaurantRepository.urlForClients+"/images/desserts.png"
+        var sandwichesImage = RestaurantRepository.urlForClients+"/images/sandwiches.png"
 
         // i added images to the server, thats why i asked to please use my server attached
         when (item) {

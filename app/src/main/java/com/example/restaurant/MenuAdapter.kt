@@ -30,7 +30,7 @@ class MenuAdapter(
         holder.onBind(items[position])
 
         var icon = item.imageUrl
-       icon =  icon.replace("localhost","192.168.1.191")
+       icon =  icon.replace("localhost",RestaurantRepository.ipAddress)
         Picasso.get().load(icon).into(holder.itemView
             .findViewById<ImageView>(R.id.menu_image))
 

@@ -16,6 +16,8 @@ import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 object RestaurantRepository {
+    var ipAddress = "192.168.1.191"
+    var urlForClients = "http://192.168.1.191:8090"
     var menuList = mutableListOf<MenuServer.Item>()
     var categoriesList = mutableListOf<String>()
     var string = ""

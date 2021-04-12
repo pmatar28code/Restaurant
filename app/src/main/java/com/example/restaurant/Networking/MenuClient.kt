@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object MenuClient {
-    const val url = "http://192.168.1.191:8090"
+    val url = RestaurantRepository.urlForClients
     val okhttp = OkHttpClient()
     private val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
