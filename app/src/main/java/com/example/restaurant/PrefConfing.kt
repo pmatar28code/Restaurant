@@ -21,8 +21,8 @@ class PrefConfing {
         var jsonString: String? = pref.getString(LIST_KEY,"")
         var gson = Gson()
         var type = object: TypeToken<List<MenuServer.Item>>(){}.type
-        var list:List<MenuServer.Item> = gson.fromJson(jsonString,type)
-        return list
+        var list:List<MenuServer.Item> ?= gson.fromJson(jsonString,type)?: emptyList()
+        return list!!
     }
 
     fun deletePref(context: Context){
