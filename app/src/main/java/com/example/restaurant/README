@@ -1,0 +1,29 @@
+Hello Mr. Alan.  Please use this server, (on terminal.  python restaurantserver.py
+inside server directory) as I modified it a bit so that the server sends the estimate
+Prep time for the items, there was a for loop deleting that parameter for the item
+before returning it.
+
+Please update IP address of your machine on RestaurantRepository
+val ipaddress
+
+
+As I couldn’t get to work post, to get prep time back, I’m using the prep time I got from
+server response when getting the menu items.
+
+Need to keep working on that post, but I wanted to submit the app.
+
+I also added images to the server  for categories and some menu items so the app looks a bit
+nicer.
+
+I didn’t do things i was supposed to but got the app working, sorry for that, after this project
+need To go back and revisit view models, learn to get contexts bit better, review lambdas, high
+order functions,Companion objects, interfaces, obviously Post, more on retrofit, Moshi ,okhttp,
+and Live data.
+
+I think every one is doing much better on those than me.
+Their code looks much more fancier/complicated.
+
+Regarding ItunesApp, I did struggle and had to move on, got it working with my own methods though,
+there Was no option to submit.
+
+Thank you, Mr. Alan. Im eager to see the review.
