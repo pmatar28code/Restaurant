@@ -80,7 +80,7 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
             RestaurantRepository.totalCheckAmount = 0.0
             RestaurantRepository.getCheckTotal()
             val orderText = view.findViewById<TextView>(R.id.order_title_text)
-            orderText.text = "Your Order Total: ${RestaurantRepository.totalCheckAmount}"
+            orderText.text = "Your Order Total: $${RestaurantRepository.totalCheckAmount}"
             val orderButton = view.findViewById<Button>(R.id.order_submit_button)
 
             if (RestaurantRepository.orderList.isNotEmpty()) {

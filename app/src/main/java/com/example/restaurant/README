@@ -6,7 +6,6 @@ before returning it.
 Please update IP address of your machine on RestaurantRepository
 val ipaddress
 
-
 As I couldn’t get to work post, to get prep time back, I’m using the prep time I got from
 server response when getting the menu items.
 
@@ -26,4 +25,4 @@ Their code looks much more fancier/complicated.
 Regarding ItunesApp, I did struggle and had to move on, got it working with my own methods though,
 there Was no option to submit.
 
-Thank you, Mr. Alan. Im eager to see the review.
+Thank you, Mr. Alan.

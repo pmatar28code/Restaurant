@@ -42,7 +42,7 @@ class OrderAdapter(
         fun onBind(current: MenuServer.Item){
             binding.apply {
                 orderNameText.text = "Item: ${current.name}"
-                orderPriceText.text = "Price: ${current.price}"
+                orderPriceText.text = "Price: $${current.price}"
             }
         }
     }
