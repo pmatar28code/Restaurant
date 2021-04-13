@@ -1,4 +1,4 @@
-Hello Mr. Alan.  Please use this server, (on terminal.  python restaurantserver.py
+Hello Mr. Alan.  Please use the server on zip file, (on terminal.  python restaurantserver.py
 inside server directory) as I modified it a bit so that the server sends the estimate
 Prep time for the items, there was a for loop deleting that parameter for the item
 before returning it.
