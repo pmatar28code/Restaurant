@@ -28,9 +28,10 @@ class SubmitDialog(
                     RestaurantRepository.totalCheckAmount = 0.0
                     RestaurantRepository.getTotalPrepTime()
                     RestaurantRepository.getCheckTotal()
-                    val intent = Intent(context,MainActivity::class.java)
-                    intent.putExtra("confirmation","confirmation")
-                    startActivity(intent)
+                    var mainActivityView =(activity as MainActivity)
+                    if(mainActivityView is ListenersInterface){
+                        mainActivityView.goToFragment(ConfirmationFragment())
+                    }
                     RestaurantRepository.orderList.clear()
                     //PrefConfing().deletePref(requireContext())
                     //RestaurantRepository.totalCheckAmount=0.0

@@ -27,8 +27,9 @@ object RestaurantRepository {
     var orderList = mutableListOf<MenuServer.Item>()
     var totalPrepTime: Int = 0
     var totalCheckAmount: Double = 0.0
+    var menuCategory = ""
 
-    fun callGetCategories(context:Context){
+    fun callGetCategories(context:Context,onComplete : (List<String>) -> Unit) {
         CategoriesClient.categoriesService.getCategories().
             enqueue(object : Callback<CategoriesServer> {
                 override fun onFailure(call: Call<CategoriesServer>, t: Throwable) {
@@ -50,11 +51,12 @@ object RestaurantRepository {
                             }
                         }
                     }
+                    onComplete(categoriesList)
                 }
             })
     }
 
-    fun callGetMenu(menu :String,context: Context){
+    fun callGetMenu(menu :String,context: Context,onComplete: (List<MenuServer.Item>) -> Unit){
         MenuClient.MenuService.getMenu(menu).
         enqueue(object : Callback<MenuServer> {
             override fun onFailure(call: Call<MenuServer>, t: Throwable) {
@@ -73,6 +75,7 @@ object RestaurantRepository {
                            menuList.add(item)
                         }
                     }
+                    onComplete(menuList)
                 }
             }
         })

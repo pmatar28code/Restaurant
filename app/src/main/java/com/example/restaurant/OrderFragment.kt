@@ -1,12 +1,12 @@
 package com.example.restaurant
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +14,7 @@ import com.example.restaurant.Networking.MenuServer
 import com.example.restaurant.databinding.FragmentOrderBinding
 import com.example.restaurant.recyclerview.OrderAdapter
 import com.example.restaurant.repositories.RestaurantRepository
+import com.example.restaurant.viewmodels.MainViewModel
 
 class OrderFragment:Fragment(R.layout.fragment_order) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,11 +27,12 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
             recycler.apply {
                 val prefList= if(
                 PrefConfing().readListFromPref(requireContext()).isNotEmpty()){
+
                     PrefConfing().readListFromPref(requireContext()).toMutableList()
                 }else{
                     mutableListOf<MenuServer.Item>()
                 }
-                if(RestaurantRepository.orderList.isEmpty() && prefList.isNotEmpty() ){
+                if(RestaurantRepository.orderList.isEmpty() && prefList.isNotEmpty()  ){
                     for(item in prefList){
                         RestaurantRepository.orderList.add(item)
                     }
@@ -64,9 +66,14 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                                 prefList.removeAt(position)
                                 PrefConfing().deletePref(requireContext())
                                 PrefConfing().writeListInPref(requireContext(),prefList.toList())
-                                val intent = Intent(context, MainActivity::class.java)
-                                intent.putExtra("change", "change")
-                                startActivity(intent)
+
+                                var MainAct = (activity as MainActivity)
+                                if(MainAct is ListenersInterface){
+                                    MainAct.live(requireContext())
+                                }
+                                // val intent = Intent(context, MainActivity::class.java)
+                                //intent.putExtra("change", "change")
+                                //startActivity(intent)
                             }
                         })
 

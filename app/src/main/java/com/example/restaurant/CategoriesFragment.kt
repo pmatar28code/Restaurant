@@ -19,31 +19,39 @@ class CategoriesFragment: Fragment(R.layout.fragment_categories) {
         val binding = FragmentCategoriesBinding.inflate(inflater)
 
         val recycler = view.findViewById<RecyclerView>(R.id.categoriesRecycler)
-        RestaurantRepository.callGetCategories(requireContext())
-        Handler().postDelayed(
-          {
-              binding.apply {
-                  recycler.apply {
-                      adapter= CatAdapter(
-                              RestaurantRepository.categoriesList,
-                              onClick = { CategoriesModel ->
-                                  val category = CategoriesModel
-                                  RestaurantRepository.menuList.clear()
-                                  RestaurantRepository.callGetMenu(category, context)
-                                  Handler().postDelayed({
-                                      val manager = parentFragmentManager
-                                      manager.beginTransaction()
-                                              .replace(R.id.categories_container, MenuFragment())
-                                              .commit()
-                                  }, 500)
-                              })
-                      layoutManager = LinearLayoutManager(context,
-                      LinearLayoutManager.VERTICAL,false)
-                      setHasFixedSize(true)
-                  }
-              }
-        },
-        500 // value in milliseconds
-         )
+        RestaurantRepository.callGetCategories(requireContext()){list ->
+            binding.apply {
+                recycler.apply {
+                    adapter= CatAdapter(
+                            list,
+                            onClick = { CategoriesModel ->
+                                val category = CategoriesModel
+                                RestaurantRepository.menuList.clear()
+                                RestaurantRepository.menuCategory = category
+
+                                //val manager = parentFragmentManager
+                                //manager.beginTransaction()
+                                        //.replace(R.id.categories_container, MenuFragment())
+                                       // .commit()
+                               var mainActivityView = (activity as MainActivity)
+                                if(mainActivityView is ListenersInterface){
+                                    mainActivityView.goToFragment(MenuFragment())
+                                }
+
+
+                            })
+                    layoutManager = LinearLayoutManager(context,
+                            LinearLayoutManager.VERTICAL,false)
+                    setHasFixedSize(true)
+                }
+            }
+
+        }
+
+
+
+
+
+
     }
 }

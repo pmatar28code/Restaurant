@@ -19,16 +19,9 @@ class DetailsFragment: Fragment(R.layout.fragment_details) {
         val inflater = LayoutInflater.from(context)
         val binding = FragmentDetailsBinding.inflate(inflater)
 
-        val intent = Intent()
-        val name = intent.getStringExtra("name").toString()
-        val description = intent.getStringExtra("description").toString()
-        val imageUrl = intent.getStringExtra("image").toString()
-        val price = intent.getStringExtra("price").toString()
-        val position = intent.getStringExtra("position").toString()
-
         val testingRepoObject = RestaurantRepository.MenuObject
 
-        setContent(binding,name,description,imageUrl,price,position,testingRepoObject!!)
+        setContent(binding,testingRepoObject!!)
 
         //Again had trouble with binding on this fragment
         val addToOrderButton = view.findViewById<Button>(R.id.frag_details_button)
@@ -37,14 +30,19 @@ class DetailsFragment: Fragment(R.layout.fragment_details) {
             //
             PrefConfing().writeListInPref(requireContext(), RestaurantRepository.orderList)
 
-            val intent = Intent(context,MainActivity::class.java)
-            intent.putExtra("change","change")
-            startActivity(intent)
+            var MainAct = (activity as MainActivity)
+            if(MainAct is ListenersInterface){
+                MainAct.live(requireContext())
+            }
+
+            var mainActivityView =(activity as MainActivity)
+            if(mainActivityView is ListenersInterface){
+                mainActivityView.goToFragment(OrderFragment())
+            }
         }
     }
 
-fun setContent(binding: FragmentDetailsBinding, name:String, description:String,
-    imageUrl:String, price:String, position:String, testing: MenuServer.Item){
+fun setContent(binding: FragmentDetailsBinding,  testing: MenuServer.Item){
 
     view?.findViewById<TextView>(R.id.frag_details_name_text)?.text = testing.name
     view?.findViewById<TextView>(R.id.frag_details_text)?.text = testing.description

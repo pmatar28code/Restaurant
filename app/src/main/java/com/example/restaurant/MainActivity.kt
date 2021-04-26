@@ -6,31 +6,53 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.restaurant.databinding.ActivityMainBinding
 import com.example.restaurant.repositories.RestaurantRepository
+import com.example.restaurant.viewmodels.MainViewModel
 import com.notificationman.library.NotificationMan
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),ListenersInterface {
     var CHANNEL_ID = "channel01"
     var notificationId = 101
-
+    val mainViewModel:MainViewModel ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         creatNotificationChannel()
+        val mainViewModel : MainViewModel by viewModels()
+
+        //var mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        var liveBadge = mainViewModel.liveBadge
+        mainViewModel.getLiveBadge(this)
+
+
+        if(PrefConfing().readListFromPref(this).isEmpty()){
+            swapFragments(CategoriesFragment())
+        }else{
+            swapFragments(OrderFragment())
+        }
+
+        liveBadge.observe(this, Observer<Int> {
+            binding.testText.text = it.toString()
+            binding.menu.getOrCreateBadge(R.id.order).number = it
+            binding.menu.refreshDrawableState()
+        })
 
         var getIntent = intent.getStringExtra("change")
         var getIntentDetails = intent.getStringExtra("details")
         var getIntentConfirmation = intent.getStringExtra("confirmation")
         var getIntentError = intent.getStringExtra("error")
 
-        Handler().postDelayed(
-            {
+
             if(getIntent!=null){
             binding.menu.selectedItemId=R.id.order
             RestaurantRepository.menuList.clear()
@@ -75,9 +97,8 @@ class MainActivity : AppCompatActivity() {
                 RestaurantRepository.menuList.clear()
                 updateBadge(binding)
                     }
-                },
-                800 // value in milliseconds
-        )
+
+
 
         binding.menu.setOnNavigationItemSelectedListener {
             handeBottonNavigation(it.itemId,binding)
@@ -89,6 +110,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun swapFragments(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
+                .addToBackStack("back")
                 .replace(R.id.categories_container, fragment)
                 .commit()
     }
@@ -147,5 +169,15 @@ class MainActivity : AppCompatActivity() {
         with(NotificationManagerCompat.from(this)){
             notify(notificationId,builder.build())
         }
+    }
+
+    override fun goToFragment(fragment : Fragment) {
+        swapFragments(fragment)
+    }
+
+
+    override fun live(context: Context) {
+        val mainv : MainViewModel by viewModels()
+        mainv.getLiveBadge(context)
     }
 }
