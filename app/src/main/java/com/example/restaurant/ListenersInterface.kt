@@ -5,5 +5,7 @@ import androidx.fragment.app.Fragment
 
 interface ListenersInterface {
     fun goToFragment(fragment: Fragment)
-    fun live(context: Context)
+    fun liveBadgeUpdate(context: Context)
+    fun forScheduleNotification()
+
 }

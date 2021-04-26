@@ -47,7 +47,7 @@ class MenuFragment: Fragment(R.layout.fragment_menu) {
 
                         var MainAct = (activity as MainActivity)
                         if(MainAct is ListenersInterface){
-                            MainAct.live(requireContext())
+                            MainAct.liveBadgeUpdate(requireContext())
                         }
                         //val intent = Intent(context, MainActivity::class.java)
                         //intent.putExtra("change", "change")

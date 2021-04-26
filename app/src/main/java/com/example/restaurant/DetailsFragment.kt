@@ -32,7 +32,7 @@ class DetailsFragment: Fragment(R.layout.fragment_details) {
 
             var MainAct = (activity as MainActivity)
             if(MainAct is ListenersInterface){
-                MainAct.live(requireContext())
+                MainAct.liveBadgeUpdate(requireContext())
             }
 
             var mainActivityView =(activity as MainActivity)

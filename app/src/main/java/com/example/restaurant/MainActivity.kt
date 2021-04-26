@@ -45,67 +45,27 @@ class MainActivity : AppCompatActivity(),ListenersInterface {
             binding.testText.text = it.toString()
             binding.menu.getOrCreateBadge(R.id.order).number = it
             binding.menu.refreshDrawableState()
+            //RestaurantRepository.orderListQuantity = it
         })
 
-        var getIntent = intent.getStringExtra("change")
-        var getIntentDetails = intent.getStringExtra("details")
-        var getIntentConfirmation = intent.getStringExtra("confirmation")
+
         var getIntentError = intent.getStringExtra("error")
 
 
-            if(getIntent!=null){
-            binding.menu.selectedItemId=R.id.order
-            RestaurantRepository.menuList.clear()
-            getIntent = ""
-            }else if(getIntentDetails == "details"){
-                swapFragments(DetailsFragment())
-                getIntentDetails =""
-            }else if (getIntentConfirmation == "confirmation"){
-                swapFragments((ConfirmationFragment()))
-                getIntentConfirmation = ""
-                sendNotification()
-                // var test = applicationContext//activity?.applicationContext
-                // RestaurantRepository.createNotifyMe(test,RestaurantRepository.totalPrepTime)
-                //i used a library
-                //to show the notification on x seconds based on 50% of the total prep time
-                val timeInSeconds = RestaurantRepository.
-                getTimeForNotification(RestaurantRepository.totalPrepTime)
 
-                fun fireNotificationMan(context : Context) = NotificationMan
-                .Builder(context, "com.notification.man.MainActivity") // make sure class path match with your project architecture
-                .setTitle("Your Restaurant order") // optional
-                .setDescription("Be prepared,order is gonna be ready in" +
-                " ${RestaurantRepository.notificationPrepTimeRemaining(timeInSeconds)} Minutes") // optional
-                .setThumbnailImageUrl("https://www.presidenteicguadalajara.com/english/" +
-                "resourcefiles/diningsmallimages/bistro-la-bastille-in-presidencial-presidente-" +
-                "intercontinental-guadalajara-mexico-01.jpg?version=3192021103745") // optional
-                .setTimeInterval(timeInSeconds.toLong()) // needs secs - default is 5 secs
-                .setNotificationType(NotificationMan.NOTIFICATION_TYPE_IMAGE) // optional - default type is TEXT
-                .fire()
-                fireNotificationMan(applicationContext)
-
-                PrefConfing().deletePref(this)
-                val tempList = RestaurantRepository.orderList
-                PrefConfing().writeListInPref(this,tempList)
-                //This error message takes like 5 seconds to show
-            }else if(getIntentError == "error"){
+             if(getIntentError == "error"){
                 swapFragments(ErrorFragment())
                 getIntentError = ""
-            }else{
-                binding.menu.selectedItemId=R.id.categories
-                //RestaurantRepository.categoriesList.clear()
-                RestaurantRepository.menuList.clear()
-                updateBadge(binding)
-                    }
+            }
 
 
 
         binding.menu.setOnNavigationItemSelectedListener {
             handeBottonNavigation(it.itemId,binding)
         }
-        val orderBadgeNumber = RestaurantRepository.orderList.size
-        binding.menu.refreshDrawableState()
-        binding.menu.getOrCreateBadge(R.id.order).number=orderBadgeNumber
+        //val orderBadgeNumber = RestaurantRepository.orderList.size
+       // binding.menu.refreshDrawableState()
+       // binding.menu.getOrCreateBadge(R.id.order).number=orderBadgeNumber
     }
 
     private fun swapFragments(fragment: Fragment) {
@@ -176,8 +136,35 @@ class MainActivity : AppCompatActivity(),ListenersInterface {
     }
 
 
-    override fun live(context: Context) {
+    override fun liveBadgeUpdate(context: Context) {
         val mainv : MainViewModel by viewModels()
         mainv.getLiveBadge(context)
     }
+
+    override fun forScheduleNotification() {
+        val timeInSeconds = RestaurantRepository.
+        getTimeForNotification(RestaurantRepository.totalPrepTime)
+
+        fun fireNotificationMan(context : Context) = NotificationMan
+                .Builder(context, "com.notification.man.MainActivity") // make sure class path match with your project architecture
+                .setTitle("Your Restaurant order") // optional
+                .setDescription("Be prepared,order is gonna be ready in" +
+                        " ${RestaurantRepository.notificationPrepTimeRemaining(timeInSeconds)} Minutes") // optional
+                .setThumbnailImageUrl("https://www.presidenteicguadalajara.com/english/" +
+                        "resourcefiles/diningsmallimages/bistro-la-bastille-in-presidencial-presidente-" +
+                        "intercontinental-guadalajara-mexico-01.jpg?version=3192021103745") // optional
+                .setTimeInterval(timeInSeconds.toLong()) // needs secs - default is 5 secs
+                .setNotificationType(NotificationMan.NOTIFICATION_TYPE_IMAGE) // optional - default type is TEXT
+                .fire()
+        fireNotificationMan(applicationContext)
+
+        PrefConfing().deletePref(this)
+        val tempList = RestaurantRepository.orderList
+        PrefConfing().writeListInPref(this,tempList)
+
+        sendNotification()
+
+    }
+
+
 }

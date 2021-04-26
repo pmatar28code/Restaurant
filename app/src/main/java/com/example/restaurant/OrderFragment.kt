@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +18,7 @@ import com.example.restaurant.databinding.FragmentOrderBinding
 import com.example.restaurant.recyclerview.OrderAdapter
 import com.example.restaurant.repositories.RestaurantRepository
 import com.example.restaurant.viewmodels.MainViewModel
+import com.example.restaurant.viewmodels.OrderViewModel
 
 class OrderFragment:Fragment(R.layout.fragment_order) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,8 +73,11 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
 
                                 var MainAct = (activity as MainActivity)
                                 if(MainAct is ListenersInterface){
-                                    MainAct.live(requireContext())
+                                    MainAct.liveBadgeUpdate(requireContext())
                                 }
+
+                                val orderViewModel : OrderViewModel by viewModels()
+                                orderViewModel.setLiveOrderTotal()
                                 // val intent = Intent(context, MainActivity::class.java)
                                 //intent.putExtra("change", "change")
                                 //startActivity(intent)
@@ -84,18 +91,33 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                 adapter?.notifyDataSetChanged()
             }
 
-            RestaurantRepository.totalCheckAmount = 0.0
-            RestaurantRepository.getCheckTotal()
-            val orderText = view.findViewById<TextView>(R.id.order_title_text)
-            orderText.text = "Your Order Total: $${RestaurantRepository.totalCheckAmount}"
-            val orderButton = view.findViewById<Button>(R.id.order_submit_button)
 
-            if (RestaurantRepository.orderList.isNotEmpty()) {
-                orderButton.setOnClickListener {
-                    val dialog = SubmitDialog()
-                    dialog.show(childFragmentManager, "start")
+            val orderViewModel : OrderViewModel by viewModels()
+            orderViewModel.setLiveOrderTotal()
+            orderViewModel.liveOrderTotal.observe(viewLifecycleOwner, Observer {
+                val orderText = view.findViewById<TextView>(R.id.order_title_text)
+                orderText.text = "Your Order Total: $${it}"
+
+                val orderButton = view.findViewById<Button>(R.id.order_submit_button)
+
+                if (it != 0.00) {
+                    orderButton.setOnClickListener {
+                        val dialog = SubmitDialog()
+                        dialog.show(childFragmentManager, "start")
+                    }
+                }else{
+                    //orderButton.isClickable = false
+                    orderButton.setOnClickListener {
+                        Toast.makeText(requireContext(),"Please add an item to your order",Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+            })
+
+           // RestaurantRepository.totalCheckAmount = 0.0
+           // RestaurantRepository.getCheckTotal()
+           // val orderText = view.findViewById<TextView>(R.id.order_title_text)
+            //orderText.text = "Your Order Total: $${RestaurantRepository.totalCheckAmount}"
+
         }
 
     }

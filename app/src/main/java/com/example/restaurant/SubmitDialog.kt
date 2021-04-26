@@ -29,12 +29,20 @@ class SubmitDialog(
                     RestaurantRepository.getTotalPrepTime()
                     RestaurantRepository.getCheckTotal()
                     var mainActivityView =(activity as MainActivity)
+
                     if(mainActivityView is ListenersInterface){
+                        mainActivityView.forScheduleNotification()
                         mainActivityView.goToFragment(ConfirmationFragment())
                     }
+
                     RestaurantRepository.orderList.clear()
-                    //PrefConfing().deletePref(requireContext())
+                    PrefConfing().deletePref(requireContext())
+                    PrefConfing().writeListInPref(requireContext(),RestaurantRepository.orderList)
                     //RestaurantRepository.totalCheckAmount=0.0
+                    var MainAct = (activity as MainActivity)
+                    if(MainAct is ListenersInterface){
+                        MainAct.liveBadgeUpdate(requireContext())
+                    }
                 }
                 .setNegativeButton(getString(R.string.cancel)){ _, _ ->
                     //do nothing here

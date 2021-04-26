@@ -28,6 +28,7 @@ object RestaurantRepository {
     var totalPrepTime: Int = 0
     var totalCheckAmount: Double = 0.0
     var menuCategory = ""
+    //var orderListQuantity = 0
 
     fun callGetCategories(context:Context,onComplete : (List<String>) -> Unit) {
         CategoriesClient.categoriesService.getCategories().
