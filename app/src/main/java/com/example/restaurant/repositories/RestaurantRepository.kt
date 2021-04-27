@@ -114,6 +114,7 @@ object RestaurantRepository {
 
     fun getCheckTotal(){
         var oderList = orderList
+        totalCheckAmount = 0.00
         for(item in orderList){
             totalCheckAmount += item.price
         }

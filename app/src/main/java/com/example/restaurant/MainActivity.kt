@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(),ListenersInterface {
         creatNotificationChannel()
         val mainViewModel : MainViewModel by viewModels()
 
-        //var mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         var liveBadge = mainViewModel.liveBadge
         mainViewModel.getLiveBadge(this)
 
@@ -50,22 +49,17 @@ class MainActivity : AppCompatActivity(),ListenersInterface {
 
 
         var getIntentError = intent.getStringExtra("error")
-
-
-
-             if(getIntentError == "error"){
-                swapFragments(ErrorFragment())
-                getIntentError = ""
-            }
+        if(getIntentError == "error"){
+            swapFragments(ErrorFragment())
+            getIntentError = ""
+        }
 
 
 
         binding.menu.setOnNavigationItemSelectedListener {
             handeBottonNavigation(it.itemId,binding)
         }
-        //val orderBadgeNumber = RestaurantRepository.orderList.size
-       // binding.menu.refreshDrawableState()
-       // binding.menu.getOrCreateBadge(R.id.order).number=orderBadgeNumber
+
     }
 
     private fun swapFragments(fragment: Fragment) {

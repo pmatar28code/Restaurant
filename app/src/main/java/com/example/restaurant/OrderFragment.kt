@@ -75,8 +75,9 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                                 if(MainAct is ListenersInterface){
                                     MainAct.liveBadgeUpdate(requireContext())
                                 }
-
+                                // NOTE total check amount is adding everytime i press order.
                                 val orderViewModel : OrderViewModel by viewModels()
+                                //RestaurantRepository.totalCheckAmount = 0.00
                                 orderViewModel.setLiveOrderTotal()
                                 // val intent = Intent(context, MainActivity::class.java)
                                 //intent.putExtra("change", "change")
@@ -96,7 +97,7 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
             orderViewModel.setLiveOrderTotal()
             orderViewModel.liveOrderTotal.observe(viewLifecycleOwner, Observer {
                 val orderText = view.findViewById<TextView>(R.id.order_title_text)
-                orderText.text = "Your Order Total: $${it}"
+                orderText.text = "Your Order Total: $$it"
 
                 val orderButton = view.findViewById<Button>(R.id.order_submit_button)
 
@@ -114,9 +115,9 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
             })
 
            // RestaurantRepository.totalCheckAmount = 0.0
-           // RestaurantRepository.getCheckTotal()
-           // val orderText = view.findViewById<TextView>(R.id.order_title_text)
-            //orderText.text = "Your Order Total: $${RestaurantRepository.totalCheckAmount}"
+           //RestaurantRepository.getCheckTotal()
+            //val orderText = view.findViewById<TextView>(R.id.order_title_text)
+           // orderText.text = "Your Order Total: $${RestaurantRepository.totalCheckAmount}"
 
         }
 
