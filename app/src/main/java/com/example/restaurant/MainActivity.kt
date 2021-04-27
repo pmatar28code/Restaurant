@@ -5,15 +5,12 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.restaurant.databinding.ActivityMainBinding
 import com.example.restaurant.repositories.RestaurantRepository
 import com.example.restaurant.viewmodels.MainViewModel
@@ -22,7 +19,7 @@ import com.notificationman.library.NotificationMan
 class MainActivity : AppCompatActivity(),ListenersInterface {
     var CHANNEL_ID = "channel01"
     var notificationId = 101
-    val mainViewModel:MainViewModel ?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,7 +27,7 @@ class MainActivity : AppCompatActivity(),ListenersInterface {
         creatNotificationChannel()
         val mainViewModel : MainViewModel by viewModels()
 
-        var liveBadge = mainViewModel.liveBadge
+        val liveBadge = mainViewModel.liveBadge
         mainViewModel.getLiveBadge(this)
 
 
@@ -44,7 +41,6 @@ class MainActivity : AppCompatActivity(),ListenersInterface {
             binding.testText.text = it.toString()
             binding.menu.getOrCreateBadge(R.id.order).number = it
             binding.menu.refreshDrawableState()
-            //RestaurantRepository.orderListQuantity = it
         })
 
 
@@ -53,8 +49,6 @@ class MainActivity : AppCompatActivity(),ListenersInterface {
             swapFragments(ErrorFragment())
             getIntentError = ""
         }
-
-
 
         binding.menu.setOnNavigationItemSelectedListener {
             handeBottonNavigation(it.itemId,binding)
@@ -82,17 +76,6 @@ class MainActivity : AppCompatActivity(),ListenersInterface {
             }
             else -> false
         }
-    }
-
-    private fun updateBadge(binding: ActivityMainBinding){
-
-        val prefList = PrefConfing().readListFromPref(this)
-        val orderBadgeNumber = prefList.size
-         binding.menu.refreshDrawableState()
-        // menu.getOrCreateBadge(R.id.order).number=orderBadgeNumber
-
-        //var count = RestaurantRepository.orderList.size
-        binding.menu.getOrCreateBadge(R.id.order).number = orderBadgeNumber
     }
 
     private fun creatNotificationChannel(){
@@ -159,6 +142,4 @@ class MainActivity : AppCompatActivity(),ListenersInterface {
         sendNotification()
 
     }
-
-
 }

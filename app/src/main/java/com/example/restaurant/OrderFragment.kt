@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -17,7 +16,6 @@ import com.example.restaurant.Networking.MenuServer
 import com.example.restaurant.databinding.FragmentOrderBinding
 import com.example.restaurant.recyclerview.OrderAdapter
 import com.example.restaurant.repositories.RestaurantRepository
-import com.example.restaurant.viewmodels.MainViewModel
 import com.example.restaurant.viewmodels.OrderViewModel
 
 class OrderFragment:Fragment(R.layout.fragment_order) {
@@ -91,7 +89,6 @@ class OrderFragment:Fragment(R.layout.fragment_order) {
                 setHasFixedSize(true)
                 adapter?.notifyDataSetChanged()
             }
-
 
             val orderViewModel : OrderViewModel by viewModels()
             orderViewModel.setLiveOrderTotal()
